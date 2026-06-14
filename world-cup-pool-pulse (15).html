@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USA Finally Advances Pool Tracker · World Cup 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#082A36; --chalk:#F2F5F0; --board:#131310;
+    --amber:#FFB627; --red:#E4572E; --muted:#7FA9B4; --live:#6FE3A5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--deep);color:var(--chalk);font-family:'Barlow Condensed',Arial,sans-serif;}
+  body{background:linear-gradient(180deg,#06222C 0%,#0B3644 45%,#07242E 100%);background-attachment:fixed;min-height:100vh;overflow-x:hidden;}
+  .water{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .water i{position:absolute;left:50%;width:220vmax;height:220vmax;margin-left:-110vmax;border-radius:43% 47% 44% 46%;background:rgba(140,210,230,.045);}
+  .water i:nth-child(1){top:76%;animation:waterspin 40s linear infinite;}
+  .water i:nth-child(2){top:81%;background:rgba(255,182,39,.022);animation:waterspin 58s linear infinite reverse;}
+  .water i:nth-child(3){top:86%;background:rgba(140,210,230,.035);animation:waterspin 73s linear infinite;}
+  @keyframes waterspin{to{transform:rotate(360deg)}}
+  .caustics{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(42vmax 30vmax at 18% 28%, rgba(160,220,235,.05), transparent 60%),
+      radial-gradient(50vmax 36vmax at 82% 58%, rgba(160,220,235,.04), transparent 60%),
+      radial-gradient(36vmax 30vmax at 50% 92%, rgba(160,220,235,.04), transparent 60%);
+    animation:shimmer 26s ease-in-out infinite alternate;}
+  @keyframes shimmer{to{transform:translate3d(0,-2.5%,0) scale(1.05)}}
+  @media (prefers-reduced-motion: reduce){.water i,.caustics{animation:none}.flare{display:none}.ticker-inner{animation:none!important}}
+  .flare{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .flare>span{position:absolute;bottom:-70px;animation:floatup linear infinite;will-change:transform}
+  .flare>span>i{display:inline-block;font-style:normal;animation:sway ease-in-out infinite alternate}
+  .flare>span>i.spin{animation:spinball linear infinite}
+  @keyframes floatup{to{transform:translateY(-118vh)}}
+  @keyframes sway{from{transform:translateX(-16px) rotate(-8deg)}to{transform:translateX(16px) rotate(8deg)}}
+  @keyframes spinball{to{transform:rotate(360deg)}}
+  .wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:28px 18px 80px;}
+  header{margin-bottom:14px;}
+  .kick{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+  h1{font-family:'Archivo Black',sans-serif;font-size:clamp(24px,5.2vw,48px);letter-spacing:.5px;line-height:1.02;color:var(--chalk);text-shadow:4px 4px 0 rgba(0,0,0,.35);}
+  h1 .amber{color:var(--amber)}
+  .sub{font-size:18px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-weight:600;margin-top:6px}
+  .ticker{margin:14px 0 4px;background:rgba(0,0,0,.45);border:1px solid rgba(255,182,39,.35);border-radius:4px;overflow:hidden;white-space:nowrap}
+  .ticker-inner{display:inline-block;padding:7px 0;font-weight:700;font-size:16px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);animation:tick 40s linear infinite}
+  .ticker-inner b{color:var(--chalk)}
+  @keyframes tick{to{transform:translateX(-50%)}}
+  nav{display:flex;gap:8px;margin:18px 0 26px;flex-wrap:wrap;padding:14px 0;border-top:1px solid rgba(242,245,240,.22);border-bottom:1px solid rgba(242,245,240,.22)}
+  nav button{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--chalk);background:rgba(0,0,0,.25);border:2px solid rgba(242,245,240,.25);padding:10px 22px;cursor:pointer;border-radius:3px;transition:all .15s;}
+  nav button:hover{border-color:var(--amber)}
+  nav button.on{background:var(--amber);color:var(--board);border-color:var(--amber)}
+  nav button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .flap{display:inline-flex;align-items:center;gap:3px;font-family:'IBM Plex Mono',monospace;font-weight:700;}
+  .flap .d{position:relative;background:var(--board);color:var(--amber);padding:2px 7px;border-radius:3px;min-width:24px;text-align:center;box-shadow:inset 0 -2px 0 rgba(255,255,255,.06), 0 2px 3px rgba(0,0,0,.4);}
+  .flap .d::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.7);}
+  .flap .sep{color:rgba(242,245,240,.6);font-weight:700}
+  .nopick{color:var(--muted);font-style:italic}
+  .real{color:var(--muted);font-size:14px;margin-left:8px;font-weight:600}
+  /* ---- squads & pitch ---- */
+  .sqtoggle{display:flex;gap:8px;margin:6px 0 14px;flex-wrap:wrap}
+  .sqtoggle button{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--chalk);background:rgba(0,0,0,.3);border:1px solid rgba(242,245,240,.25);padding:6px 16px;cursor:pointer;border-radius:18px;transition:all .15s}
+  .sqtoggle button:hover{border-color:var(--amber)}
+  .sqtoggle button.on{background:var(--amber);color:var(--board);border-color:var(--amber)}
+  .squadcols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:640px){.squadcols{grid-template-columns:1fr}}
+  .squadteam .stitle{font-family:'Archivo Black',sans-serif;font-size:18px;margin-bottom:8px}
+  .posgroup{margin-bottom:10px}
+  .posgroup .pl{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:4px}
+  .plr{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px solid rgba(242,245,240,.06);font-size:16px}
+  .plr .nm{font-weight:600}
+  .plr .nm .sh{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:13px;margin-right:7px}
+  .plr .cl{color:var(--muted);font-size:14px;text-align:right;white-space:nowrap}
+  .plr.start .nm{color:var(--live)}
+  .nosquad{color:var(--muted);font-size:16px;font-style:italic;padding:8px 0}
+  /* pitch */
+  .pitchwrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:720px){.pitchwrap{grid-template-columns:1fr}}
+  .pitch{position:relative;aspect-ratio:68/52;background:linear-gradient(180deg,#0c5a3a,#0a4e33);border:2px solid rgba(255,255,255,.25);border-radius:6px;overflow:hidden}
+  .pitch.away{background:linear-gradient(180deg,#0a4e33,#0c5a3a)}
+  .pitch .ln{position:absolute;border:1px solid rgba(255,255,255,.22)}
+  .pitch .halfway{left:0;right:0;top:50%;border-width:1px 0 0 0}
+  .pitch .circle{width:30%;aspect-ratio:1;border-radius:50%;left:35%;top:50%;transform:translateY(-50%)}
+  .pitch .box{left:22%;right:22%;height:16%}
+  .pitch .box.top{top:0;border-top:none}
+  .pitch .box.bot{bottom:0;border-bottom:none}
+  .dot-p{position:absolute;transform:translate(-50%,-50%);text-align:center;width:54px}
+  .dot-p .num{width:30px;height:30px;margin:0 auto;border-radius:50%;background:var(--amber);color:var(--board);font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.5)}
+  .pitch.away .dot-p .num{background:#7ec8c8}
+  .dot-p .nmp{font-size:11px;font-weight:700;color:#fff;margin-top:2px;line-height:1.1;text-shadow:0 1px 2px rgba(0,0,0,.9)}
+  .dot-p .clp{font-size:9px;color:rgba(255,255,255,.7);line-height:1;text-shadow:0 1px 2px rgba(0,0,0,.9)}
+  .pitchcap{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px;text-align:center}
+  .panel{display:none}
+  .panel.on{display:block;animation:rise .25s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){ .panel.on{animation:none} .livepill{animation:none} .dot.ok{animation:none} }
+  .card{background:rgba(7,20,26,.82);border:1px solid rgba(242,245,240,.14);border-radius:6px;padding:18px;backdrop-filter:blur(2px);}
+  .mdtabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px dashed rgba(255,182,39,.4)}
+  .mdt{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:1.5px;text-transform:uppercase;color:var(--chalk);background:rgba(0,0,0,.3);border:1px solid rgba(242,245,240,.25);padding:8px 18px;cursor:pointer;border-radius:20px;transition:all .15s;}
+  .mdt:hover{border-color:var(--amber)}
+  .mdt.on{background:var(--amber);color:var(--board);border-color:var(--amber)}
+  .matchgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px;margin-bottom:22px}
+  .mbtn{text-align:left;cursor:pointer;border:1px solid rgba(242,245,240,.18);background:rgba(7,20,26,.75);color:var(--chalk);padding:10px 12px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;transition:all .12s;}
+  .mbtn:hover{border-color:var(--amber);transform:translateY(-1px)}
+  .mbtn.on{border-color:var(--amber);background:rgba(255,182,39,.12)}
+  .mbtn .teams{font-weight:700;font-size:19px;letter-spacing:1px}
+  .mbtn .mini{display:flex;height:5px;border-radius:3px;overflow:hidden;margin-top:8px;background:rgba(255,255,255,.08)}
+  .mbtn .mini i{display:block;height:100%}
+  .mbtn .lean{font-size:13px;color:var(--muted);margin-top:5px;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+  .mbtn .lean .fin{color:var(--live)}
+  .mhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  .mhead .big{font-family:'Archivo Black',sans-serif;font-size:clamp(22px,4.5vw,34px)}
+  .mdtag{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--board);background:var(--amber);padding:3px 10px;border-radius:3px}
+  .livepill{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#06281a;background:var(--live);padding:3px 10px;border-radius:3px;animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.55}}
+  .ftpill{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--chalk);background:rgba(255,255,255,.14);padding:3px 10px;border-radius:3px}
+  .splitbar{display:flex;height:38px;border-radius:4px;overflow:hidden;border:1px solid rgba(0,0,0,.4);margin:10px 0 6px}
+  .splitbar div{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;letter-spacing:1px;color:var(--board);white-space:nowrap;overflow:hidden}
+  .seg-h{background:var(--amber)} .seg-d{background:#cfd8d2} .seg-a{background:#7ec8c8}
+  .legend{display:flex;gap:18px;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:18px;flex-wrap:wrap}
+  .legend b{color:var(--chalk)}
+  .seclabel{font-size:14px;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);font-weight:700;margin:18px 0 10px;border-bottom:1px dashed rgba(255,182,39,.35);padding-bottom:6px}
+  .scorefreq{display:flex;flex-wrap:wrap;gap:10px}
+  .sf{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.25);border:1px solid rgba(242,245,240,.12);padding:7px 10px;border-radius:5px}
+  .sf .n{font-weight:700;font-size:16px;color:var(--muted)}
+  .sf.top{border-color:var(--amber)}
+  .sf.lone{border-style:dashed;border-color:rgba(228,87,46,.7)}
+  .sf.lone .n{color:var(--red)}
+  .rooting{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .root{background:rgba(0,0,0,.25);border:1px solid rgba(242,245,240,.12);border-radius:5px;padding:12px 14px}
+  .root .rh{font-weight:700;font-size:17px;letter-spacing:1px;margin-bottom:6px}
+  .root .rh .plus{color:var(--live);font-family:'IBM Plex Mono',monospace;font-size:14px}
+  .root .names{font-size:16px;color:#b9d2da;line-height:1.45}
+  table{width:100%;border-collapse:collapse;font-size:17px}
+  th{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid rgba(242,245,240,.18)}
+  td{padding:7px 8px;border-bottom:1px solid rgba(242,245,240,.07)}
+  tr:hover td{background:rgba(255,255,255,.04)}
+  .pts{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--amber);text-align:right;white-space:nowrap}
+  .pts.zero{color:var(--muted)}
+  .pts .lv{color:var(--live);font-size:13px;margin-left:4px}
+  td.rank{font-family:'Archivo Black',sans-serif;color:var(--muted);width:60px;white-space:nowrap}
+  .mv{font-size:13px;margin-left:4px;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+  .mv.up{color:var(--live)} .mv.dn{color:#ff8a66}
+  tr.podium td.rank{color:var(--amber)}
+  .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-left:8px}
+  .tag.herd{background:rgba(255,182,39,.18);color:var(--amber)}
+  .tag.lone{background:rgba(228,87,46,.18);color:#ff8a66}
+  .tag.miss{background:rgba(127,169,180,.18);color:var(--muted)}
+  .tag.exact{background:rgba(111,227,165,.18);color:var(--live)}
+  .statusline{display:flex;align-items:center;gap:10px;font-size:15px;letter-spacing:1px;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:14px;flex-wrap:wrap}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--muted)}
+  .dot.ok{background:var(--live);animation:pulse 1.6s ease-in-out infinite}
+  .dot.err{background:var(--red)}
+  .recap{margin-bottom:14px;border-left:5px solid var(--amber)}
+  .recaplines{display:grid;gap:7px;font-size:17px;line-height:1.4}
+  .recaplines b{color:var(--amber)}
+  .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin-bottom:22px}
+  .pbtn{cursor:pointer;text-align:left;border:1px solid rgba(242,245,240,.18);background:rgba(7,20,26,.75);color:var(--chalk);padding:9px 12px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:17px;transition:all .12s;display:flex;justify-content:space-between;gap:8px;align-items:center}
+  .pbtn:hover{border-color:var(--amber)}
+  .pbtn.on{border-color:var(--amber);background:rgba(255,182,39,.12)}
+  .pbtn small{color:var(--muted);font-size:13px;letter-spacing:1px}
+  .statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:8px}
+  .stat{background:rgba(0,0,0,.28);border:1px solid rgba(242,245,240,.12);border-radius:5px;padding:12px 14px}
+  .stat .v{font-family:'Archivo Black',sans-serif;font-size:30px;color:var(--amber)}
+  .stat .k{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:2px}
+  .agree{color:var(--amber);font-weight:700}
+  .differ{color:#ff8a66;font-weight:700}
+  .supergrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:14px}
+  .super{background:rgba(7,20,26,.85);border:1px solid rgba(242,245,240,.14);border-left:5px solid var(--amber);border-radius:5px;padding:16px 16px 14px}
+  .super .award{font-size:13px;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);font-weight:700}
+  .super .who{font-family:'Archivo Black',sans-serif;font-size:21px;margin:7px 0 4px;line-height:1.1}
+  .super .why{font-size:16px;color:#aecbd4;line-height:1.35}
+  footer{margin-top:40px;text-align:center;font-size:14px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="water" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="caustics" aria-hidden="true"></div>
+<div class="flare" aria-hidden="true"></div>
+<div class="wrap">
+  <header>
+    <div class="kick">
+      <h1>USA FINALLY ADVANCES<br><span class="amber">POOL TRACKER</span></h1>
+      <span class="flap" style="font-size:22px;margin-bottom:8px"><span class="d">2</span><span class="d">6</span></span>
+    </div>
+    <div class="sub" id="subline"></div>
+    <div class="ticker" aria-label="pool headlines"><div class="ticker-inner" id="ticker"></div></div>
+  </header>
+
+  <nav>
+    <button class="on" data-tab="leaderboard">Leaderboard</button>
+    <button data-tab="matches">Matches</button>
+    <button data-tab="players">Players</button>
+    <button data-tab="superlatives">Superlatives</button>
+  </nav>
+
+  <section id="leaderboard" class="panel on">
+    <div class="card recap" id="recapcard" style="display:none"></div>
+    <div class="card">
+      <div class="statusline" id="statusline"><span class="dot"></span><span>connecting to live results…</span></div>
+      <div id="lbbody"></div>
+    </div>
+  </section>
+
+  <section id="matches" class="panel">
+    <div class="mdtabs" id="mdtabs"></div>
+    <div class="matchgrid" id="matchgrid"></div>
+    <div class="card" id="matchdetail"></div>
+  </section>
+
+  <section id="players" class="panel">
+    <div class="pgrid" id="pgrid"></div>
+    <div class="card" id="pdetail"></div>
+  </section>
+
+  <section id="superlatives" class="panel">
+    <div class="supergrid" id="supergrid"></div>
+  </section>
+
+  <footer>usa finally advances · talk your trash responsibly</footer>
+</div>
+
+<script>
+/* ================= DATA ================= */
+const PLAYERS = [
+"Kane versus Son in final","Team Voldemort","K-Football","Tchouameni French Stars",
+"USA Rules!!! Or Spain…","I Am From Bosnia, Take Me To America","EddieYates","Escargot go France!",
+"BandosBrew","Soccer or Football","Uzbeckhamstan","Insane Kane salt & vinegoallllll",
+"All In! Autumn Wind","bedstuy ball knowers","WESPN","Paul the Octopus",
+"Christian’s Pulisack","Deeds picks","Dr Yank FC","OozbekiSTAN",
+"Rice Rice Baby","John","LakeTalent","SuperJam"
+];
+
+const FLAG = {MEX:"🇲🇽",RSA:"🇿🇦",KOR:"🇰🇷",CZE:"🇨🇿",CAN:"🇨🇦",BIH:"🇧🇦",USA:"🇺🇸",PAR:"🇵🇾",QAT:"🇶🇦",SUI:"🇨🇭",
+BRA:"🇧🇷",MAR:"🇲🇦",HAI:"🇭🇹",SCO:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",AUS:"🇦🇺",TUR:"🇹🇷",GER:"🇩🇪",CUW:"🇨🇼",NED:"🇳🇱",JPN:"🇯🇵",
+CIV:"🇨🇮",ECU:"🇪🇨",ESP:"🇪🇸",CPV:"🇨🇻",BEL:"🇧🇪",EGY:"🇪🇬",SWE:"🇸🇪",TUN:"🇹🇳",KSA:"🇸🇦",URU:"🇺🇾",
+IRN:"🇮🇷",NZL:"🇳🇿",FRA:"🇫🇷",SEN:"🇸🇳",IRQ:"🇮🇶",NOR:"🇳🇴",ARG:"🇦🇷",ALG:"🇩🇿",AUT:"🇦🇹",JOR:"🇯🇴",
+POR:"🇵🇹",COD:"🇨🇩",ENG:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",CRO:"🇭🇷",GHA:"🇬🇭",PAN:"🇵🇦",UZB:"🇺🇿",COL:"🇨🇴"};
+
+
+/* picks[i] = [home,away] for PLAYERS[i]; null = no pick submitted */
+const MATCHES = [
+/* ---- Matchday 1 ---- */
+{md:1,h:"MEX",a:"RSA",p:[[3,1],[2,0],[3,0],[3,0],[3,1],[2,1],[2,0],[2,0],[2,1],[1,1],[2,1],[2,1],[2,0],[1,0],[2,0],[2,0],[3,1],[2,0],[2,0],[2,0],[2,1],[2,0],[3,0],[3,0]]},
+{md:1,h:"KOR",a:"CZE",p:[[1,1],[2,1],[2,1],[2,1],[1,1],[1,0],[1,1],[1,1],[1,1],[2,1],[1,0],[0,1],[1,1],[2,1],[1,0],[2,1],[1,2],[1,1],[2,1],[1,1],[1,1],[1,1],[3,1],[2,3]]},
+{md:1,h:"CAN",a:"BIH",p:[[2,1],[1,0],[2,1],[0,1],[2,1],[0,1],[3,0],[2,1],[2,0],[2,1],[1,1],[0,1],[1,1],[0,0],[2,0],[2,0],[2,0],[2,1],[2,0],[2,1],[1,1],[2,0],[3,1],[1,2]]},
+{md:1,h:"USA",a:"PAR",p:[[1,0],[1,0],[1,3],[0,2],[2,1],[2,1],[2,1],[2,0],[1,1],[2,2],[2,0],[2,1],[2,1],[1,2],[2,1],[2,1],[2,1],[3,1],[2,1],[2,1],[2,1],[1,1],[1,0],[2,3]]},
+{md:1,h:"QAT",a:"SUI",p:[[1,3],[0,2],[2,1],[0,3],[0,2],[0,1],[0,2],[1,1],[0,2],[0,4],[0,0],[0,2],[0,2],[0,1],[0,3],[0,2],[1,2],[0,2],[1,3],[0,3],[0,2],[1,2],[1,3],[0,3]]},
+{md:1,h:"BRA",a:"MAR",p:[[2,1],[2,0],[3,1],[1,1],[2,1],[2,2],[3,1],[0,1],[2,2],[1,1],[1,0],[3,1],[3,1],[1,1],[2,1],[3,0],[4,0],[3,1],[3,2],[0,0],[2,1],[3,1],[1,0],[3,2]]},
+{md:1,h:"HAI",a:"SCO",p:[[1,2],[0,2],[0,1],[1,2],[1,1],[0,1],[0,2],[1,2],[0,2],[0,3],[1,4],[0,1],[1,2],[1,3],[0,3],[1,2],[2,3],[0,0],[1,2],[0,3],[0,3],[0,2],[0,2],[1,3]]},
+{md:1,h:"AUS",a:"TUR",p:[[0,3],[0,2],[2,2],[1,3],[1,2],[0,2],[2,2],[1,1],[1,2],[1,3],[1,2],[2,2],[1,1],[0,1],[0,3],[0,3],[1,2],[1,2],[1,3],[1,1],[0,2],[1,2],[1,1],[1,4]]},
+{md:1,h:"GER",a:"CUW",p:[[4,0],[4,0],[2,1],[6,0],[3,0],[4,0],[4,0],[5,0],[3,0],[4,1],[6,0],[4,0],[4,0],[2,0],[4,0],[3,1],[3,0],[3,0],[5,0],[4,0],[3,0],[4,0],[4,0],[4,0]]},
+{md:1,h:"NED",a:"JPN",p:[[3,1],[2,1],[2,1],[2,1],[2,0],[2,1],[1,0],[2,1],[2,0],[2,1],[2,2],[1,1],[2,1],[2,2],[2,2],[1,1],[2,1],[2,0],[2,1],[2,1],[1,1],[2,1],[2,2],[2,3]]},
+{md:1,h:"CIV",a:"ECU",p:[[0,4],[1,1],[1,3],[1,1],[1,1],[0,1],[1,1],[0,1],[1,2],[1,2],[1,0],[0,0],[1,1],[1,2],[2,2],[1,0],[2,2],[0,0],[1,3],[1,2],[1,1],[1,1],[1,1],[3,2]]},
+{md:1,h:"ESP",a:"CPV",p:[[4,0],[4,0],[4,1],[6,0],[4,0],[3,0],[4,0],[5,0],[4,0],[3,0],[1,0],[3,0],[3,0],[3,0],[2,1],[3,0],[3,0],[2,0],[4,0],[4,0],[3,0],[3,0],[4,0],[4,0]]},
+{md:1,h:"BEL",a:"EGY",p:[[1,1],[2,1],[2,1],[1,1],[1,1],[2,1],[2,0],[2,1],[2,1],[2,1],[2,0],[1,2],[2,0],[2,2],[2,1],[3,0],[2,0],[2,0],[3,1],[1,1],[2,2],[2,2],[0,0],[2,3]]},
+{md:1,h:"SWE",a:"TUN",p:[[2,1],[1,0],[2,1],[2,1],[2,0],[1,0],[2,0],[2,1],[2,1],[2,0],[0,0],[2,1],[1,0],[2,0],[3,0],[2,0],[2,1],[1,1],[0,0],[2,0],[2,0],[1,1],[1,0],[1,2]]},
+{md:1,h:"KSA",a:"URU",p:[[1,3],[1,2],[3,4],[0,4],[1,2],[0,2],[2,1],[0,2],[0,2],[0,3],[1,1],[0,1],[0,2],[0,1],[1,3],[0,2],[0,2],[0,4],[0,2],[0,2],[0,2],[1,3],[0,1],[1,2]]},
+{md:1,h:"IRN",a:"NZL",p:[[2,2],[1,0],[1,1],[1,1],[1,1],[2,0],[1,1],[1,1],[1,1],[3,1],[1,0],[0,0],[1,0],[1,0],[2,0],[1,1],[1,1],[2,2],[1,1],[0,0],[0,2],[2,0],[0,1],[3,1]]},
+{md:1,h:"FRA",a:"SEN",p:[[3,1],[3,1],[3,0],[2,0],[2,1],[2,0],[2,0],[3,1],[3,1],[3,0],[1,1],[3,1],[2,1],[2,1],[3,0],[3,1],[3,0],[3,1],[3,1],[0,1],[3,1],[3,1],[1,0],[2,2]]},
+{md:1,h:"IRQ",a:"NOR",p:[[0,2],[0,2],[1,2],[0,3],[1,2],[0,2],[1,2],[0,1],[0,2],[1,3],[1,3],[0,2],[0,2],[0,2],[0,2],[0,3],[0,3],[0,2],[0,2],[0,3],[0,3],[0,2],[2,3],[2,2]]},
+{md:1,h:"ARG",a:"ALG",p:[[2,0],[2,0],[2,0],[3,1],[2,0],[3,1],[4,1],[1,0],[3,1],[3,1],[1,0],[2,1],[2,0],[1,0],[3,1],[2,0],[3,1],[4,1],[3,0],[2,0],[4,0],[3,1],[2,0],[2,2]]},
+{md:1,h:"AUT",a:"JOR",p:[[3,1],[2,0],[1,2],[4,0],[1,0],[2,0],[2,0],[3,1],[2,1],[3,1],[1,1],[1,0],[2,0],[2,0],[2,0],[3,0],[2,0],[2,2],[1,0],[1,1],[1,1],[1,0],[0,0],[3,0]]},
+{md:1,h:"POR",a:"COD",p:[[4,0],[4,0],[1,2],[4,0],[4,0],[3,1],[3,0],[1,1],[4,0],[3,0],[3,0],[3,1],[3,0],[3,1],[2,0],[3,0],[3,1],[3,1],[4,0],[2,0],[3,0],[3,1],[4,0],[5,1]]},
+{md:1,h:"ENG",a:"CRO",p:[[2,1],[2,1],[3,1],[3,1],[2,1],[3,2],[2,2],[1,1],[1,1],[3,2],[1,1],[1,1],[2,1],[1,0],[3,1],[2,1],[2,0],[1,1],[3,2],[1,0],[2,1],[2,2],[1,1],[2,2]]},
+{md:1,h:"GHA",a:"PAN",p:[[1,1],[2,1],[2,1],[2,0],[1,1],[1,0],[2,0],[1,2],[2,1],[2,1],[0,0],[0,1],[2,1],[0,0],[1,0],[2,1],[2,2],[2,0],[2,0],[1,2],[2,0],[2,0],[3,0],[3,2]]},
+{md:1,h:"UZB",a:"COL",p:[[0,3],[0,2],[0,2],[1,3],[0,3],[1,1],[0,2],[1,2],[0,2],[0,3],[0,2],[1,3],[0,2],[0,1],[0,4],[0,2],[0,3],[1,4],[0,1],[1,2],[0,2],[0,2],[0,2],[0,2]]},
+/* ---- Matchday 2 ---- */
+{md:2,h:"CZE",a:"RSA",p:[[3,2],[1,0],[0,1],[2,0],[1,0],[2,0],[2,0],[1,0],[2,1],[3,0],[0,1],[1,0],[2,0],[0,0],[0,2],[1,1],[2,2],[1,0],[1,1],[1,0],[1,1],[2,0],[0,0],[3,0]]},
+{md:2,h:"SUI",a:"BIH",p:[[1,1],[1,1],[1,0],[2,0],[2,0],[0,1],[2,0],[2,1],[2,1],[1,1],[1,1],[0,0],[1,1],[1,2],[3,0],[2,0],[4,0],[2,0],[0,1],[2,1],[2,2],[2,0],[2,0],null]},
+{md:2,h:"CAN",a:"QAT",p:[[3,0],[2,1],[2,1],[4,0],[2,0],[0,0],[2,0],[1,0],[2,1],[3,1],[0,1],[2,1],[2,0],[1,0],[2,0],[2,0],[3,1],[1,1],[3,1],[2,0],[2,0],[3,0],[1,1],[2,1]]},
+{md:2,h:"MEX",a:"KOR",p:[[1,1],[2,1],[2,2],[2,1],[1,1],[1,1],[2,0],[1,1],[2,1],[2,1],[1,2],[1,1],[2,1],[0,0],[2,1],[2,1],[2,2],[1,1],[1,1],[1,1],[2,1],[2,2],[1,1],[2,2]]},
+{md:2,h:"USA",a:"AUS",p:[[3,1],[1,0],[2,1],[1,1],[2,1],[2,0],[2,1],[2,1],[1,1],[2,1],[2,1],[2,1],[2,0],[1,0],[2,0],[2,1],[2,1],[2,0],[2,0],[1,1],[2,1],[3,1],[1,0],[1,2]]},
+{md:2,h:"SCO",a:"MAR",p:[[0,1],[1,2],[1,2],[0,2],[0,1],[0,1],[1,1],[0,0],[0,2],[0,2],[1,2],[2,2],[1,1],[0,1],[0,3],[1,1],[3,1],[0,3],[0,3],[1,1],[1,1],[1,2],[0,2],[1,3]]},
+{md:2,h:"BRA",a:"HAI",p:[[3,0],[3,0],[5,0],[4,0],[2,0],[2,1],[3,0],[3,0],[3,1],[2,0],[4,0],[3,0],[3,0],[3,0],[4,0],[2,0],[4,0],[3,0],[3,0],[3,0],[3,0],[4,0],[4,1],[5,0]]},
+{md:2,h:"TUR",a:"PAR",p:[[2,1],[2,1],[1,3],[0,2],[1,0],[2,2],[1,0],[1,2],[1,1],[2,1],[1,1],[2,0],[2,1],[1,1],[2,1],[2,0],[2,2],[2,2],[1,1],[1,2],[1,1],[1,1],[1,1],[3,3]]},
+{md:2,h:"NED",a:"SWE",p:[[3,1],[2,1],[3,1],[1,1],[2,1],[3,3],[3,1],[2,0],[2,0],[3,2],[3,1],[2,2],[1,1],[2,1],[3,1],[2,0],[1,1],[3,0],[1,0],[2,1],[2,2],[2,1],[0,0],[1,1]]},
+{md:2,h:"GER",a:"CIV",p:[[4,0],[3,1],[2,0],[1,0],[1,1],[1,0],[3,0],[2,1],[2,0],[1,1],[2,2],[4,0],[2,1],[2,1],[4,0],[3,0],[2,1],[4,1],[3,1],[2,1],[2,1],[3,1],[1,0],[3,2]]},
+{md:2,h:"ECU",a:"CUW",p:[[2,0],[1,0],[2,0],[4,0],[1,0],[1,0],[1,0],[2,0],[1,0],[3,1],[1,0],[2,0],[3,0],[3,1],[3,0],[1,0],[3,1],[1,1],[2,0],[3,0],[2,0],[2,0],[2,0],[2,0]]},
+{md:2,h:"TUN",a:"JPN",p:[[0,0],[0,0],[0,2],[0,0],[0,1],[1,2],[1,1],[0,1],[0,0],[0,3],[0,1],[0,1],[1,2],[0,2],[0,2],[1,3],[2,2],[1,3],[0,2],[0,1],[0,2],[1,2],[0,2],[2,1]]},
+{md:2,h:"ESP",a:"KSA",p:[[3,0],[3,0],[3,0],[4,0],[3,0],[3,0],[3,0],[3,0],[3,0],[4,1],[1,0],[3,1],[3,1],[3,1],[2,0],[3,0],[3,0],[4,1],[3,0],[1,0],[3,0],[4,0],[2,0],[4,0]]},
+{md:2,h:"BEL",a:"IRN",p:[[1,1],[2,1],[2,1],[3,0],[2,1],[2,0],[2,0],[1,1],[2,0],[2,1],[1,1],[1,0],[2,1],[0,0],[3,0],[3,1],[2,0],[3,0],[3,0],[0,0],[4,0],[1,1],[1,0],[2,2]]},
+{md:2,h:"URU",a:"CPV",p:[[4,0],[2,0],[3,1],[5,0],[2,1],[2,0],[3,0],[3,0],[2,0],[3,1],[2,1],[1,0],[2,0],[3,0],[3,0],[3,0],[3,3],[2,0],[3,1],[2,0],[2,0],[2,0],[4,0],[4,0]]},
+{md:2,h:"NZL",a:"EGY",p:[[2,2],[1,1],[1,2],[0,2],[1,2],[1,2],[1,1],[2,1],[0,0],[0,2],[2,2],[0,1],[1,1],[0,1],[0,2],[1,1],[2,2],[2,2],[0,1],[2,1],[0,2],[1,3],[0,0],[2,3]]},
+{md:2,h:"ARG",a:"AUT",p:[[3,0],[2,1],[2,1],[2,0],[2,0],[2,1],[3,0],[2,1],[1,0],[2,1],[1,1],[3,1],[2,1],[1,0],[3,0],[2,0],[3,1],[3,0],[3,0],[2,1],[2,2],[2,0],[2,1],[2,2]]},
+{md:2,h:"FRA",a:"IRQ",p:[[2,1],[3,0],[3,0],[3,0],[4,0],[3,0],[3,0],[3,1],[4,0],[4,1],[2,0],[3,0],[3,0],[3,0],[3,1],[2,1],[4,1],[4,0],[4,0],[3,1],[4,0],[3,0],[3,0],[6,1]]},
+{md:2,h:"NOR",a:"SEN",p:[[2,1],[2,2],[1,2],[1,2],[1,2],[1,1],[1,2],[1,1],[2,0],[2,1],[2,2],[1,2],[1,1],[2,0],[1,2],[3,1],[2,0],[1,1],[1,2],[2,0],[2,2],[1,2],[1,2],[0,2]]},
+{md:2,h:"JOR",a:"ALG",p:[[0,1],[0,1],[1,1],[0,3],[1,1],[0,1],[0,2],[1,1],[1,1],[1,1],[1,1],[0,1],[0,1],[0,1],[0,2],[1,1],[2,2],[0,2],[1,2],[1,1],[0,0],[1,1],[0,2],[2,2]]},
+{md:2,h:"POR",a:"UZB",p:[[3,1],[3,0],[2,1],[3,0],[3,0],[3,1],[2,0],[2,1],[4,0],[4,1],[1,1],[2,0],[2,0],[2,0],[3,0],[3,0],[3,0],[4,0],[3,0],[2,0],[4,0],[3,0],[3,1],[4,0]]},
+{md:2,h:"ENG",a:"GHA",p:[[4,1],[2,1],[3,0],[3,1],[2,1],[3,1],[2,1],[3,0],[2,0],[3,1],[3,0],[2,0],[2,0],[2,1],[2,3],[2,1],[3,1],[2,1],[3,1],[3,0],[3,1],[2,1],[2,1],[2,2]]},
+{md:2,h:"PAN",a:"CRO",p:[[1,3],[0,1],[1,2],[1,2],[1,2],[0,1],[0,2],[1,2],[0,2],[0,3],[1,2],[1,2],[0,2],[1,1],[1,3],[1,3],[2,0],[0,2],[1,2],[1,2],[0,3],[1,3],[0,2],[1,2]]},
+{md:2,h:"COL",a:"COD",p:[[2,0],[1,0],[1,2],[2,0],[3,0],[1,1],[2,0],[1,0],[2,0],[3,1],[2,1],[1,0],[2,1],[2,0],[3,1],[2,0],[4,0],[4,0],[3,1],[1,0],[3,1],[2,0],[4,0],[4,0]]},
+/* ---- Matchday 3 ---- */
+{md:3,h:"SUI",a:"CAN",p:[[1,1],[1,1],[1,1],[2,0],[1,1],[1,1],[1,2],[1,1],[2,1],[1,1],[2,0],[1,1],[1,1],[1,0],[3,1],[2,1],[2,2],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[2,2]]},
+{md:3,h:"BIH",a:"QAT",p:[[2,0],[1,0],[1,2],[4,0],[2,0],[2,0],[0,1],[0,1],[0,3],[2,0],[0,0],[1,1],[2,1],[3,1],[1,1],[0,1],[3,3],[1,1],[2,0],[0,1],[2,0],[1,1],[1,1],[2,2]]},
+{md:3,h:"SCO",a:"BRA",p:[[1,1],[1,3],[0,4],[0,3],[1,2],[1,2],[1,2],[0,1],[0,2],[0,2],[0,1],[1,2],[0,2],[0,2],[0,3],[1,3],[1,3],[0,3],[0,3],[0,1],[1,2],[1,3],[0,2],[0,3]]},
+{md:3,h:"MAR",a:"HAI",p:[[3,0],[1,0],[3,0],[4,0],[1,1],[1,0],[2,0],[2,0],[3,0],[3,0],[3,0],[2,0],[2,0],[3,0],[3,0],[2,0],[2,2],[2,0],[3,0],[2,0],[2,0],[2,0],[2,0],[3,1]]},
+{md:3,h:"CZE",a:"MEX",p:[[1,1],[1,2],[1,3],[0,2],[1,1],[1,0],[2,2],[1,2],[1,2],[0,1],[0,1],[2,2],[1,1],[0,2],[0,2],[1,2],[1,2],[2,2],[1,2],[1,2],[1,1],[1,1],[1,2],[1,3]]},
+{md:3,h:"RSA",a:"KOR",p:[[0,2],[0,1],[1,3],[0,2],[0,1],[0,2],[0,1],[0,2],[1,2],[1,2],[0,1],[1,1],[1,2],[0,1],[1,2],[0,2],[1,3],[2,2],[1,2],[1,2],[0,2],[0,2],[0,2],[0,3]]},
+{md:3,h:"CUW",a:"CIV",p:[[0,2],[0,2],[1,1],[0,4],[0,1],[0,2],[0,3],[1,3],[1,2],[1,2],[1,3],[1,2],[0,2],[0,1],[1,3],[0,2],[1,2],[2,2],[1,3],[1,3],[0,2],[1,3],[0,2],[0,3]]},
+{md:3,h:"ECU",a:"GER",p:[[0,3],[1,2],[4,2],[0,2],[1,2],[1,3],[0,3],[1,2],[0,2],[0,1],[0,0],[1,2],[1,2],[2,2],[1,3],[1,3],[1,3],[0,4],[1,4],[2,1],[0,2],[1,2],[1,3],[3,3]]},
+{md:3,h:"JPN",a:"SWE",p:[[0,0],[1,1],[2,1],[1,2],[1,1],[1,0],[1,1],[1,1],[1,1],[1,1],[2,0],[1,0],[1,1],[1,1],[3,1],[1,1],[2,2],[2,2],[2,1],[1,1],[1,2],[2,1],[0,0],[2,2]]},
+{md:3,h:"TUN",a:"NED",p:[[0,1],[0,1],[0,3],[0,2],[0,2],[1,2],[0,2],[0,3],[0,2],[0,3],[0,1],[1,1],[0,3],[0,1],[1,3],[0,1],[1,1],[1,3],[1,2],[0,3],[0,2],[1,2],[0,2],[2,2]]},
+{md:3,h:"TUR",a:"USA",p:[[2,2],[2,1],[2,1],[2,0],[1,1],[1,2],[1,2],[1,2],[2,1],[1,2],[2,2],[2,1],[1,1],[2,0],[1,2],[2,1],[1,1],[1,2],[1,1],[2,1],[2,2],[1,3],[1,2],[2,2]]},
+{md:3,h:"PAR",a:"AUS",p:[[2,0],[0,0],[2,0],[3,0],[1,0],[1,0],[1,1],[1,1],[2,1],[0,1],[1,0],[0,1],[1,2],[2,0],[1,1],[2,0],[1,0],[1,2],[2,1],[1,1],[0,2],[1,0],[2,1],[2,0]]},
+{md:3,h:"NOR",a:"FRA",p:[[1,4],[1,2],[0,3],[0,2],[0,2],[2,2],[1,3],[1,3],[0,2],[0,2],[1,2],[1,2],[1,2],[0,1],[0,2],[1,2],[1,2],[1,3],[1,3],[1,1],[2,3],[1,2],[1,3],[0,3]]},
+{md:3,h:"SEN",a:"IRQ",p:[[2,2],[2,0],[3,0],[3,0],[2,0],[2,1],[3,0],[3,1],[2,0],[2,0],[1,0],[0,1],[2,0],[1,0],[3,0],[0,0],[3,3],[3,1],[3,0],[3,1],[2,0],[2,0],[2,0],[3,2]]},
+{md:3,h:"CPV",a:"KSA",p:[[0,2],[1,1],[0,1],[0,2],[0,1],[0,2],[1,2],[2,1],[1,2],[0,0],[1,0],[1,2],[1,1],[0,1],[0,2],[1,0],[0,0],[1,1],[0,1],[1,1],[1,1],[1,1],[0,2],[3,1]]},
+{md:3,h:"URU",a:"ESP",p:[[0,1],[1,2],[1,3],[1,3],[0,2],[1,3],[1,2],[1,2],[0,2],[0,2],[0,2],[2,2],[1,1],[1,3],[1,1],[1,3],[1,3],[2,2],[1,3],[1,2],[1,3],[1,3],[1,1],[2,3]]},
+{md:3,h:"EGY",a:"IRN",p:[[3,2],[1,0],[1,1],[2,0],[2,0],[0,1],[1,1],[0,1],[1,1],[1,0],[0,0],[1,1],[1,1],[0,1],[2,1],[1,1],[1,1],[2,2],[1,0],[1,1],[2,0],[2,1],[2,0],[2,2]]},
+{md:3,h:"NZL",a:"BEL",p:[[1,3],[0,1],[1,3],[0,3],[0,2],[0,3],[0,2],[1,2],[0,2],[0,3],[0,4],[0,2],[0,3],[0,2],[0,3],[1,3],[1,2],[1,3],[0,2],[0,2],[0,2],[0,3],[0,0],[0,2]]},
+{md:3,h:"PAN",a:"ENG",p:[[1,2],[0,2],[0,3],[0,3],[0,1],[0,3],[0,2],[0,2],[0,1],[0,3],[0,4],[1,3],[0,3],[1,2],[0,3],[0,1],[0,2],[1,3],[1,2],[0,3],[0,2],[0,3],[0,2],[0,2]]},
+{md:3,h:"CRO",a:"GHA",p:[[3,1],[1,1],[1,0],[1,1],[1,1],[2,1],[2,2],[2,0],[2,0],[1,0],[2,0],[2,1],[1,1],[1,0],[2,2],[2,0],[1,1],[2,2],[2,2],[1,1],[2,2],[2,2],[1,0],[1,3]]},
+{md:3,h:"COL",a:"POR",p:[[2,3],[0,2],[1,2],[1,2],[1,1],[1,2],[2,2],[2,1],[0,2],[0,1],[0,2],[1,1],[1,1],[1,2],[2,2],[1,2],[1,2],[1,1],[1,3],[2,0],[0,2],[1,2],[0,0],[0,3]]},
+{md:3,h:"COD",a:"UZB",p:[[1,2],[1,1],[0,1],[0,0],[1,0],[0,1],[1,1],[1,1],[2,2],[2,1],[0,1],[1,1],[1,1],[0,0],[1,1],[2,0],[4,4],[0,0],[1,2],[0,2],[1,1],[0,0],[0,1],[2,2]]},
+{md:3,h:"ALG",a:"AUT",p:[[1,0],[1,1],[1,2],[2,1],[1,1],[0,2],[1,1],[0,1],[0,2],[1,1],[0,1],[1,1],[1,1],[1,1],[3,0],[0,2],[2,2],[0,0],[2,2],[1,1],[2,0],[0,1],[1,0],null]},
+{md:3,h:"JOR",a:"ARG",p:[[0,4],[0,3],[0,3],[0,4],[0,3],[0,3],[0,4],[0,3],[0,4],[1,4],[0,3],[0,2],[0,3],[1,3],[0,3],[0,2],[0,4],[1,3],[0,3],[0,2],[0,2],[0,3],[0,3],null]}
+];
+
+const REALNAME={"Kane versus Son in final": "Mark Howorth", "Team Voldemort": "Sam Fleming-Dresser", "K-Football": "Christine Daviduk", "Tchouameni French Stars": "Jacques Hugon", "USA Rules!!! Or Spain…": "Hank Gibson", "I Am From Bosnia, Take Me To America": "Ari Howorth", "EddieYates": "Edward Yates", "Escargot go France!": "Amy Howorth", "BandosBrew": "Jeremy Thomas", "Soccer or Football": "Travis Guthrie", "Uzbeckhamstan": "Jack Worth", "Insane Kane salt & vinegoallllll": "Isabel Gallenberg", "All In! Autumn Wind": "Brian Fowler", "bedstuy ball knowers": "calvin yohannan", "WESPN": "Nikole Bordokas", "Paul the Octopus": "Nick Matson", "Christian’s Pulisack": "Jake Snyder", "Deeds picks": "Dylan Fair", "Dr Yank FC": "Michael Tarnay", "OozbekiSTAN": "Tal Litwin", "Rice Rice Baby": "Aviv BC", "John": "João Decarvalho", "LakeTalent": "Bill Wendin", "SuperJam": "Jamal Rayyis"};
+const RN=n=>REALNAME[n]||"";
+
+/* ================= NATIONAL TEAM SQUADS ================= */
+/* ================= NATIONAL TEAM SQUADS (hand-curated, with clubs) =================
+   Format: SQUADS["USA"] = {formation:"4-3-3", players:[{n:"Name",num:10,pos:"FW",club:"AC Milan",xi:true}, ...]}
+   pos ∈ GK/DF/MF/FW. xi:true marks the projected/known starting XI for the pitch view.
+   Add teams incrementally — any team without an entry shows a friendly "not added yet" note. */
+const SQUADS={
+ "USA":{formation:"4-2-3-1",players:[
+  {n:"Matt Freese",num:1,pos:"GK",club:"New York City FC",xi:true},
+  {n:"Matt Turner",num:12,pos:"GK",club:"New England"},
+  {n:"Chris Brady",num:18,pos:"GK",club:"Chicago Fire"},
+  {n:"Sergiño Dest",num:2,pos:"DF",club:"PSV Eindhoven",xi:true},
+  {n:"Chris Richards",num:3,pos:"DF",club:"Crystal Palace",xi:true},
+  {n:"Tim Ream",num:13,pos:"DF",club:"Charlotte FC",xi:true},
+  {n:"Antonee Robinson",num:5,pos:"DF",club:"Fulham",xi:true},
+  {n:"Alex Freeman",num:22,pos:"DF",club:"Villarreal"},
+  {n:"Mark McKenzie",num:15,pos:"DF",club:"Toulouse"},
+  {n:"Miles Robinson",num:4,pos:"DF",club:"FC Cincinnati"},
+  {n:"Joe Scally",num:19,pos:"DF",club:"M'gladbach"},
+  {n:"Auston Trusty",num:26,pos:"DF",club:"Celtic"},
+  {n:"Max Arfsten",num:23,pos:"DF",club:"Columbus Crew"},
+  {n:"Tyler Adams",num:4,pos:"MF",club:"Bournemouth",xi:true},
+  {n:"Weston McKennie",num:8,pos:"MF",club:"Juventus",xi:true},
+  {n:"Malik Tillman",num:10,pos:"MF",club:"Bayer Leverkusen",xi:true},
+  {n:"Gio Reyna",num:7,pos:"MF",club:"M'gladbach"},
+  {n:"Sebastian Berhalter",num:6,pos:"MF",club:"Vancouver"},
+  {n:"Cristian Roldan",num:16,pos:"MF",club:"Seattle"},
+  {n:"Christian Pulisic",num:10,pos:"FW",club:"AC Milan",xi:true},
+  {n:"Tim Weah",num:21,pos:"FW",club:"Marseille",xi:true},
+  {n:"Folarin Balogun",num:9,pos:"FW",club:"AS Monaco",xi:true},
+  {n:"Ricardo Pepi",num:11,pos:"FW",club:"PSV Eindhoven"},
+  {n:"Brenden Aaronson",num:14,pos:"FW",club:"Leeds United"},
+  {n:"Haji Wright",num:17,pos:"FW",club:"Coventry City"},
+  {n:"Alex Zendejas",num:20,pos:"FW",club:"Club América"}
+ ]}
+};
+
+SQUADS["ESP"]={formation:"4-3-3",players:[
+ {n:"Unai Simón",num:1,pos:"GK",club:"Athletic Club",xi:true},
+ {n:"David Raya",num:23,pos:"GK",club:"Arsenal"},
+ {n:"Joan García",num:13,pos:"GK",club:"Barcelona"},
+ {n:"Pedro Porro",num:2,pos:"DF",club:"Tottenham",xi:true},
+ {n:"Pau Cubarsí",num:5,pos:"DF",club:"Barcelona",xi:true},
+ {n:"Aymeric Laporte",num:14,pos:"DF",club:"Athletic Club",xi:true},
+ {n:"Marc Cucurella",num:24,pos:"DF",club:"Chelsea",xi:true},
+ {n:"Alejandro Grimaldo",num:18,pos:"DF",club:"Bayer Leverkusen"},
+ {n:"Eric García",num:4,pos:"DF",club:"Barcelona"},
+ {n:"Marcos Llorente",num:3,pos:"DF",club:"Atlético Madrid"},
+ {n:"Marc Pubill",num:12,pos:"DF",club:"Atlético Madrid"},
+ {n:"Rodri",num:16,pos:"MF",club:"Manchester City",xi:true},
+ {n:"Pedri",num:8,pos:"MF",club:"Barcelona",xi:true},
+ {n:"Martín Zubimendi",num:6,pos:"MF",club:"Arsenal",xi:true},
+ {n:"Fabián Ruiz",num:20,pos:"MF",club:"PSG"},
+ {n:"Mikel Merino",num:10,pos:"MF",club:"Arsenal"},
+ {n:"Gavi",num:9,pos:"MF",club:"Barcelona"},
+ {n:"Álex Baena",num:15,pos:"MF",club:"Atlético Madrid"},
+ {n:"Lamine Yamal",num:19,pos:"FW",club:"Barcelona",xi:true},
+ {n:"Nico Williams",num:17,pos:"FW",club:"Athletic Club",xi:true},
+ {n:"Mikel Oyarzabal",num:21,pos:"FW",club:"Real Sociedad",xi:true},
+ {n:"Dani Olmo",num:7,pos:"FW",club:"Barcelona"},
+ {n:"Ferran Torres",num:11,pos:"FW",club:"Barcelona"},
+ {n:"Yeremy Pino",num:22,pos:"FW",club:"Crystal Palace"},
+ {n:"Borja Iglesias",num:25,pos:"FW",club:"Celta Vigo"},
+ {n:"Víctor Muñoz",num:26,pos:"FW",club:"Osasuna"}
+]};
+
+function squadFor(code){return SQUADS[code]||null;}
+const POS_ORDER={GK:0,DF:1,MF:2,FW:3};
+const POS_LABEL={GK:"Goalkeepers",DF:"Defenders",MF:"Midfielders",FW:"Forwards"};
+
+/* --- auto-added squads (Group A, more rolling in) --- */
+// Running squad builder. Each team appended as verified. Numbers added where known; estimated otherwise.
+const NEW={};
+NEW["MEX"]={formation:"4-3-3",players:[
+ {n:"Raúl Rangel",pos:"GK",club:"Chivas",xi:true},
+ {n:"Carlos Acevedo",pos:"GK",club:"Santos Laguna"},
+ {n:"Guillermo Ochoa",pos:"GK",club:"AEL Limassol"},
+ {n:"Israel Reyes",pos:"DF",club:"Club América",xi:true},
+ {n:"Jesús Gallardo",pos:"DF",club:"Toluca",xi:true},
+ {n:"Jorge Sánchez",pos:"DF",club:"PAOK"},
+ {n:"César Montes",pos:"DF",club:"Lokomotiv Moscow",xi:true},
+ {n:"Johan Vásquez",pos:"DF",club:"Genoa",xi:true},
+ {n:"Mateo Chávez",pos:"DF",club:"PSV"},
+ {n:"Erik Lira",pos:"MF",club:"Cruz Azul"},
+ {n:"Luis Romo",pos:"MF",club:"Chivas",xi:true},
+ {n:"Obed Vargas",pos:"MF",club:"Atlético Madrid"},
+ {n:"Brian Gutiérrez",pos:"MF",club:"Chivas"},
+ {n:"Orbelín Pineda",pos:"MF",club:"AEK Athens",xi:true},
+ {n:"Edson Álvarez",pos:"MF",club:"Fenerbahçe",xi:true},
+ {n:"Gilberto Mora",pos:"MF",club:"Tijuana"},
+ {n:"César Huerta",pos:"MF",club:"Anderlecht"},
+ {n:"Álvaro Fidalgo",pos:"MF",club:"Real Betis"},
+ {n:"Luis Chávez",pos:"MF",club:"Dynamo Moscow"},
+ {n:"Roberto Alvarado",pos:"FW",club:"Chivas",xi:true},
+ {n:"Alexis Vega",pos:"FW",club:"Toluca"},
+ {n:"Julián Quiñones",pos:"FW",club:"Al-Qadsiah",xi:true},
+ {n:"Santiago Giménez",pos:"FW",club:"AC Milan",xi:true},
+ {n:"Guillermo Martínez",pos:"FW",club:"Pumas"},
+ {n:"Armando González",pos:"FW",club:"Chivas"},
+ {n:"Raúl Jiménez",pos:"FW",club:"Fulham"}
+]};
+NEW["RSA"]={formation:"3-4-3",players:[
+ {n:"Ronwen Williams",pos:"GK",club:"Mamelodi Sundowns",xi:true},
+ {n:"Ricardo Goss",pos:"GK",club:"Siwelele"},
+ {n:"Sipho Chaine",pos:"GK",club:"Orlando Pirates"},
+ {n:"Khuliso Mudau",pos:"DF",club:"Mamelodi Sundowns",xi:true},
+ {n:"Aubrey Modiba",pos:"DF",club:"Mamelodi Sundowns",xi:true},
+ {n:"Khulumani Ndamane",pos:"DF",club:"Mamelodi Sundowns",xi:true},
+ {n:"Olwethu Makhanya",pos:"DF",club:"Philadelphia Union"},
+ {n:"Bradley Cross",pos:"DF",club:"Kaizer Chiefs"},
+ {n:"Thabang Matuludi",pos:"DF",club:"Polokwane City"},
+ {n:"Nkosinathi Sibisi",pos:"DF",club:"Orlando Pirates"},
+ {n:"Ime Okon",pos:"DF",club:"Hannover 96"},
+ {n:"Samukele Kabini",pos:"DF",club:"Molde"},
+ {n:"Mbekezeli Mbokazi",pos:"DF",club:"Chicago Fire"},
+ {n:"Teboho Mokoena",pos:"MF",club:"Mamelodi Sundowns",xi:true},
+ {n:"Jayden Adams",pos:"MF",club:"Mamelodi Sundowns",xi:true},
+ {n:"Thalente Mbatha",pos:"MF",club:"Orlando Pirates"},
+ {n:"Kamogelo Sebelebele",pos:"MF",club:"Orlando Pirates"},
+ {n:"Sphephelo Sithole",pos:"MF",club:"CD Tondela"},
+ {n:"Oswin Appollis",pos:"FW",club:"Orlando Pirates",xi:true},
+ {n:"Tshepang Moremi",pos:"FW",club:"Orlando Pirates"},
+ {n:"Evidence Makgopa",pos:"FW",club:"Orlando Pirates",xi:true},
+ {n:"Lyle Foster",pos:"FW",club:"Burnley",xi:true},
+ {n:"Iqraam Rayners",pos:"FW",club:"Mamelodi Sundowns",xi:true},
+ {n:"Relebohile Mofokeng",pos:"FW",club:"Orlando Pirates"},
+ {n:"Themba Zwane",pos:"MF",club:"Mamelodi Sundowns"},
+ {n:"Thapelo Maseko",pos:"FW",club:"AEL Limassol"}
+]};
+NEW["KOR"]={formation:"4-2-3-1",players:[
+ {n:"Jo Hyeon-woo",pos:"GK",club:"Ulsan HD",xi:true},
+ {n:"Kim Seung-gyu",pos:"GK",club:"FC Tokyo"},
+ {n:"Song Bum-keun",pos:"GK",club:"Jeonbuk"},
+ {n:"Kim Min-jae",pos:"DF",club:"Bayern Munich",xi:true},
+ {n:"Lee Han-beom",pos:"DF",club:"Midtjylland",xi:true},
+ {n:"Kim Tae-hyeon",pos:"DF",club:"Kashima Antlers"},
+ {n:"Park Jin-seob",pos:"DF",club:"Zhejiang"},
+ {n:"Lee Gi-hyuk",pos:"DF",club:"Gangwon"},
+ {n:"Lee Tae-seok",pos:"DF",club:"Austria Wien"},
+ {n:"Seol Young-woo",pos:"DF",club:"Red Star",xi:true},
+ {n:"Jens Castrop",pos:"DF",club:"M'gladbach"},
+ {n:"Kim Moon-hwan",pos:"DF",club:"Daejeon",xi:true},
+ {n:"Yang Hyun-jun",pos:"MF",club:"Celtic"},
+ {n:"Paik Seung-ho",pos:"MF",club:"Birmingham City"},
+ {n:"Hwang In-beom",pos:"MF",club:"Feyenoord",xi:true},
+ {n:"Kim Jin-gyu",pos:"MF",club:"Jeonbuk"},
+ {n:"Bae Jun-ho",pos:"MF",club:"Stoke City"},
+ {n:"Eom Ji-sung",pos:"MF",club:"Swansea City"},
+ {n:"Hwang Hee-chan",pos:"MF",club:"Wolves",xi:true},
+ {n:"Lee Dong-gyeong",pos:"MF",club:"Ulsan HD"},
+ {n:"Lee Jae-sung",pos:"MF",club:"Mainz",xi:true},
+ {n:"Lee Kang-in",pos:"MF",club:"PSG",xi:true},
+ {n:"Oh Hyeon-gyu",pos:"FW",club:"Beşiktaş"},
+ {n:"Son Heung-min",pos:"FW",club:"LAFC",xi:true},
+ {n:"Cho Gue-sung",pos:"FW",club:"Midtjylland",xi:true},
+ {n:"Cho Wije",pos:"DF",club:"Jeonbuk"}
+]};
+NEW["CZE"]={formation:"4-2-3-1",players:[
+ {n:"Matej Kovar",pos:"GK",club:"PSV Eindhoven",xi:true},
+ {n:"Jindrich Stanek",pos:"GK",club:"Slavia Prague"},
+ {n:"Lukas Hornicek",pos:"GK",club:"Braga"},
+ {n:"Vladimir Coufal",pos:"DF",club:"Hoffenheim",xi:true},
+ {n:"David Doudera",pos:"DF",club:"Slavia Prague"},
+ {n:"Tomas Holes",pos:"DF",club:"Slavia Prague"},
+ {n:"Robin Hranac",pos:"DF",club:"Hoffenheim",xi:true},
+ {n:"Stepan Chaloupek",pos:"DF",club:"Slavia Prague"},
+ {n:"David Jurasek",pos:"DF",club:"Slavia Prague",xi:true},
+ {n:"Ladislav Krejci",pos:"DF",club:"Wolves",xi:true},
+ {n:"Jaroslav Zeleny",pos:"DF",club:"Sparta Prague"},
+ {n:"David Zima",pos:"DF",club:"Slavia Prague"},
+ {n:"Lukas Cerv",pos:"MF",club:"Viktoria Plzen",xi:true},
+ {n:"Vladimir Darida",pos:"MF",club:"Hradec Kralove"},
+ {n:"Lukas Provod",pos:"MF",club:"Slavia Prague",xi:true},
+ {n:"Michal Sadilek",pos:"MF",club:"Slavia Prague"},
+ {n:"Hugo Sochurek",pos:"MF",club:"Sparta Prague"},
+ {n:"Alexandr Sojka",pos:"MF",club:"Viktoria Plzen"},
+ {n:"Tomas Soucek",pos:"MF",club:"West Ham",xi:true},
+ {n:"Pavel Sulc",pos:"MF",club:"Lyon",xi:true},
+ {n:"Denis Visinsky",pos:"MF",club:"Viktoria Plzen"},
+ {n:"Adam Hlozek",pos:"FW",club:"Hoffenheim",xi:true},
+ {n:"Tomas Chory",pos:"FW",club:"Slavia Prague"},
+ {n:"Mojmir Chytil",pos:"FW",club:"Slavia Prague"},
+ {n:"Jan Kuchta",pos:"FW",club:"Sparta Prague",xi:true},
+ {n:"Patrik Schick",pos:"FW",club:"Bayer Leverkusen",xi:true}
+]};
+
+NEW["CAN"]={formation:"4-3-3",players:[
+ {n:"Dayne St. Clair",pos:"GK",club:"Inter Miami",xi:true},
+ {n:"Maxime Crépeau",pos:"GK",club:"Orlando City"},
+ {n:"Owen Goodman",pos:"GK",club:"Barnsley"},
+ {n:"Alphonso Davies",pos:"DF",club:"Bayern Munich",xi:true},
+ {n:"Moïse Bombito",pos:"DF",club:"Nice",xi:true},
+ {n:"Derek Cornelius",pos:"DF",club:"Marseille",xi:true},
+ {n:"Alistair Johnston",pos:"DF",club:"Celtic",xi:true},
+ {n:"Luc de Fougerolles",pos:"DF",club:"Fulham"},
+ {n:"Alfie Jones",pos:"DF",club:"Middlesbrough"},
+ {n:"Richie Laryea",pos:"DF",club:"Toronto FC"},
+ {n:"Niko Sigur",pos:"DF",club:"Hajduk Split"},
+ {n:"Joel Waterman",pos:"DF",club:"Chicago Fire"},
+ {n:"Stephen Eustáquio",pos:"MF",club:"Porto",xi:true},
+ {n:"Ismaël Koné",pos:"MF",club:"Sassuolo",xi:true},
+ {n:"Jonathan Osorio",pos:"MF",club:"Toronto FC"},
+ {n:"Nathan Saliba",pos:"MF",club:"Anderlecht"},
+ {n:"Mathieu Choinière",pos:"MF",club:"LAFC"},
+ {n:"Ali Ahmed",pos:"MF",club:"Norwich City"},
+ {n:"Tajon Buchanan",pos:"MF",club:"Villarreal",xi:true},
+ {n:"Marcelo Flores",pos:"MF",club:"Tigres"},
+ {n:"Liam Millar",pos:"MF",club:"Hull City"},
+ {n:"Jacob Shaffelburg",pos:"MF",club:"LAFC"},
+ {n:"Jonathan David",pos:"FW",club:"Juventus",xi:true},
+ {n:"Cyle Larin",pos:"FW",club:"Mallorca",xi:true},
+ {n:"Promise David",pos:"FW",club:"Union SG"},
+ {n:"Tani Oluwaseyi",pos:"FW",club:"Villarreal"}
+]};
+NEW["BIH"]={formation:"4-2-3-1",players:[
+ {n:"Nikola Vasilj",pos:"GK",club:"St. Pauli",xi:true},
+ {n:"Martin Zlomislić",pos:"GK",club:"Rijeka"},
+ {n:"Mladen Jurkas",pos:"GK",club:"Borac Banja Luka"},
+ {n:"Sead Kolašinac",pos:"DF",club:"Atalanta",xi:true},
+ {n:"Amar Dedić",pos:"DF",club:"Benfica",xi:true},
+ {n:"Nihad Mujakić",pos:"DF",club:"Gaziantep"},
+ {n:"Nikola Katić",pos:"DF",club:"Schalke 04",xi:true},
+ {n:"Tarik Muharemović",pos:"DF",club:"Sassuolo",xi:true},
+ {n:"Stjepan Radeljić",pos:"DF",club:"Rijeka"},
+ {n:"Dennis Hadžikadunić",pos:"DF",club:"Sampdoria"},
+ {n:"Nidal Čelik",pos:"DF",club:"Lens"},
+ {n:"Amir Hadžiahmetović",pos:"MF",club:"Hull City",xi:true},
+ {n:"Ivan Šunjić",pos:"MF",club:"Pafos",xi:true},
+ {n:"Ivan Bašić",pos:"MF",club:"Astana"},
+ {n:"Dženis Burnić",pos:"MF",club:"Karlsruher SC"},
+ {n:"Ermin Mahmić",pos:"MF",club:"Slovan Liberec"},
+ {n:"Benjamin Tahirović",pos:"MF",club:"Brøndby",xi:true},
+ {n:"Amar Memić",pos:"MF",club:"Viktoria Plzen"},
+ {n:"Armin Gigović",pos:"MF",club:"Young Boys",xi:true},
+ {n:"Kerim Alajbegović",pos:"FW",club:"RB Salzburg",xi:true},
+ {n:"Esmir Bajraktarević",pos:"FW",club:"PSV Eindhoven",xi:true},
+ {n:"Ermedin Demirović",pos:"FW",club:"VfB Stuttgart",xi:true},
+ {n:"Jovo Lukić",pos:"FW",club:"Universitatea Cluj"},
+ {n:"Samed Baždar",pos:"FW",club:"Jagiellonia"},
+ {n:"Haris Tabaković",pos:"FW",club:"M'gladbach"},
+ {n:"Edin Džeko",pos:"FW",club:"Schalke 04",xi:true}
+]};
+NEW["QAT"]={formation:"4-3-3",players:[
+ {n:"Meshaal Barsham",pos:"GK",club:"Al-Sadd",xi:true},
+ {n:"Mahmoud Abunada",pos:"GK",club:"Al Rayyan"},
+ {n:"Salah Zakaria",pos:"GK",club:"Al-Wakrah"},
+ {n:"Hashmi Hussein",pos:"DF",club:"Al Arabi",xi:true},
+ {n:"Ayoub Alawi",pos:"DF",club:"Al Gharafa"},
+ {n:"Boualem Khoukhi",pos:"DF",club:"Al-Sadd",xi:true},
+ {n:"Pedro Miguel",pos:"DF",club:"Al-Sadd",xi:true},
+ {n:"Issa Laaye",pos:"DF",club:"Al Arabi"},
+ {n:"Lucas Mendes",pos:"DF",club:"Al-Wakrah",xi:true},
+ {n:"Sultan Al-Brake",pos:"DF",club:"Al-Duhail"},
+ {n:"Homam Al-Amin",pos:"DF",club:"Cultural Leonesa"},
+ {n:"Mohammed Al-Mannai",pos:"MF",club:"Al Shamal"},
+ {n:"Jassem Jaber",pos:"MF",club:"Al Arabi",xi:true},
+ {n:"Karim Boudiaf",pos:"MF",club:"Al-Duhail",xi:true},
+ {n:"Ahmed Fathi",pos:"MF",club:"Al Arabi"},
+ {n:"Abdulaziz Hatem",pos:"MF",club:"Al Rayyan"},
+ {n:"Assim Madibo",pos:"MF",club:"Al-Wakrah",xi:true},
+ {n:"Tahseen Mohammed",pos:"FW",club:"Al-Duhail"},
+ {n:"Edmilson Junior",pos:"FW",club:"Al-Duhail",xi:true},
+ {n:"Almoez Ali",pos:"FW",club:"Al-Duhail",xi:true},
+ {n:"Akram Afif",pos:"FW",club:"Al-Sadd",xi:true},
+ {n:"Mohammed Muntari",pos:"FW",club:"Al Gharafa"},
+ {n:"Youssef Abdulrazzaq",pos:"FW",club:"Al-Wakrah"},
+ {n:"Ahmed Alaa",pos:"FW",club:"Al Rayyan"},
+ {n:"Hassan Al-Haydos",pos:"FW",club:"Al-Sadd"},
+ {n:"Ahmed Al-Janahi",pos:"FW",club:"Al Gharafa"}
+]};
+NEW["SUI"]={formation:"4-2-3-1",players:[
+ {n:"Gregor Kobel",pos:"GK",club:"Borussia Dortmund",xi:true},
+ {n:"Marvin Keller",pos:"GK",club:"Young Boys"},
+ {n:"Yvon Mvogo",pos:"GK",club:"Lorient"},
+ {n:"Manuel Akanji",pos:"DF",club:"Inter Milan",xi:true},
+ {n:"Nico Elvedi",pos:"DF",club:"M'gladbach",xi:true},
+ {n:"Ricardo Rodríguez",pos:"DF",club:"Real Betis",xi:true},
+ {n:"Silvan Widmer",pos:"DF",club:"Mainz 05",xi:true},
+ {n:"Miro Muheim",pos:"DF",club:"Hamburger SV"},
+ {n:"Aurèle Amenda",pos:"DF",club:"Eintracht Frankfurt"},
+ {n:"Eray Cömert",pos:"DF",club:"Valencia"},
+ {n:"Luca Jaquez",pos:"DF",club:"Stuttgart"},
+ {n:"Granit Xhaka",pos:"MF",club:"Sunderland",xi:true},
+ {n:"Remo Freuler",pos:"MF",club:"Bologna",xi:true},
+ {n:"Denis Zakaria",pos:"MF",club:"Monaco"},
+ {n:"Ardon Jashari",pos:"MF",club:"AC Milan"},
+ {n:"Djibril Sow",pos:"MF",club:"Sevilla"},
+ {n:"Michel Aebischer",pos:"MF",club:"Pisa"},
+ {n:"Fabian Rieder",pos:"MF",club:"Augsburg",xi:true},
+ {n:"Johan Manzambi",pos:"MF",club:"Freiburg"},
+ {n:"Rubén Vargas",pos:"MF",club:"Sevilla",xi:true},
+ {n:"Dan Ndoye",pos:"MF",club:"Nottingham Forest",xi:true},
+ {n:"Noah Okafor",pos:"FW",club:"Leeds United"},
+ {n:"Breel Embolo",pos:"FW",club:"Rennes",xi:true},
+ {n:"Zeki Amdouni",pos:"FW",club:"Burnley"},
+ {n:"Cedric Itten",pos:"FW",club:"Fortuna Düsseldorf"},
+ {n:"Christian Fassnacht",pos:"MF",club:"Young Boys"}
+]};
+
+NEW["BRA"]={formation:"4-3-3",players:[
+ {n:"Alisson",pos:"GK",club:"Liverpool",xi:true},
+ {n:"Ederson",pos:"GK",club:"Fenerbahçe"},
+ {n:"Weverton",pos:"GK",club:"Grêmio"},
+ {n:"Marquinhos",pos:"DF",club:"PSG",xi:true},
+ {n:"Gabriel Magalhães",pos:"DF",club:"Arsenal",xi:true},
+ {n:"Bremer",pos:"DF",club:"Juventus"},
+ {n:"Danilo",pos:"DF",club:"Flamengo",xi:true},
+ {n:"Alex Sandro",pos:"DF",club:"Flamengo"},
+ {n:"Douglas Santos",pos:"DF",club:"Zenit",xi:true},
+ {n:"Léo Pereira",pos:"DF",club:"Flamengo"},
+ {n:"Ibañez",pos:"DF",club:"Al-Ahli"},
+ {n:"Bruno Guimarães",pos:"MF",club:"Newcastle",xi:true},
+ {n:"Casemiro",pos:"MF",club:"Manchester United",xi:true},
+ {n:"Lucas Paquetá",pos:"MF",club:"Flamengo",xi:true},
+ {n:"Danilo Santos",pos:"MF",club:"Botafogo"},
+ {n:"Fabinho",pos:"MF",club:"Al-Ahli"},
+ {n:"Ederson Santos",pos:"MF",club:"Atalanta"},
+ {n:"Vinícius Júnior",pos:"FW",club:"Real Madrid",xi:true},
+ {n:"Raphinha",pos:"FW",club:"Barcelona",xi:true},
+ {n:"Matheus Cunha",pos:"FW",club:"Manchester United",xi:true},
+ {n:"Gabriel Martinelli",pos:"FW",club:"Arsenal"},
+ {n:"Endrick",pos:"FW",club:"Lyon"},
+ {n:"Igor Thiago",pos:"FW",club:"Brentford"},
+ {n:"Luiz Henrique",pos:"FW",club:"Zenit"},
+ {n:"Neymar",pos:"FW",club:"Santos"},
+ {n:"Rayan",pos:"FW",club:"Bournemouth"}
+]};
+NEW["MAR"]={formation:"4-3-3",players:[
+ {n:"Yassine Bounou",pos:"GK",club:"Al-Hilal",xi:true},
+ {n:"Munir El Kajoui",pos:"GK",club:"RS Berkane"},
+ {n:"Ahmed Reda Tagnaouti",pos:"GK",club:"Wydad"},
+ {n:"Achraf Hakimi",pos:"DF",club:"PSG",xi:true},
+ {n:"Noussair Mazraoui",pos:"DF",club:"Manchester United",xi:true},
+ {n:"Nayef Aguerd",pos:"DF",club:"Marseille",xi:true},
+ {n:"Chadi Riad",pos:"DF",club:"Crystal Palace",xi:true},
+ {n:"Anass Salah-Eddine",pos:"DF",club:"Napoli"},
+ {n:"Zakaria El Ouahdi",pos:"DF",club:"Genk"},
+ {n:"Issa Diop",pos:"DF",club:"Fulham"},
+ {n:"Marwane Saadane",pos:"DF",club:"FAR Rabat"},
+ {n:"Redouane Halhal",pos:"DF",club:"AS FAR"},
+ {n:"Sofyan Amrabat",pos:"MF",club:"Real Betis",xi:true},
+ {n:"Azzedine Ounahi",pos:"MF",club:"Girona",xi:true},
+ {n:"Bilal El Khannouss",pos:"MF",club:"Stuttgart",xi:true},
+ {n:"Neil El Aynaoui",pos:"MF",club:"AS Roma"},
+ {n:"Ayyoub Bouaddi",pos:"MF",club:"Lille"},
+ {n:"Ismael Saibari",pos:"MF",club:"PSV Eindhoven"},
+ {n:"Samir El Mourabet",pos:"MF",club:"Strasbourg"},
+ {n:"Brahim Díaz",pos:"FW",club:"Real Madrid",xi:true},
+ {n:"Abdessamad Ezzalzouli",pos:"FW",club:"Real Betis",xi:true},
+ {n:"Soufiane Rahimi",pos:"FW",club:"Al Ain",xi:true},
+ {n:"Ayoub El Kaabi",pos:"FW",club:"Olympiacos"},
+ {n:"Chemsdine Talbi",pos:"FW",club:"Sunderland"},
+ {n:"Yassine Gessime",pos:"FW",club:"Strasbourg"},
+ {n:"Ayoube Amaimouni",pos:"FW",club:"Eintracht Frankfurt"}
+]};
+NEW["HAI"]={formation:"4-2-3-1",players:[
+ {n:"Johny Placide",pos:"GK",club:"SC Bastia",xi:true},
+ {n:"Alexandre Pierre",pos:"GK",club:"Sochaux"},
+ {n:"Josué Duverger",pos:"GK",club:"Cosmos Koblenz"},
+ {n:"Carlens Arcus",pos:"DF",club:"Angers",xi:true},
+ {n:"Jean-Kevin Duverne",pos:"DF",club:"Gent",xi:true},
+ {n:"Ricardo Adé",pos:"DF",club:"LDU Quito",xi:true},
+ {n:"Hannes Delcroix",pos:"DF",club:"Lugano",xi:true},
+ {n:"Wilguens Paugain",pos:"DF",club:"Zulte Waregem"},
+ {n:"Duke Lacroix",pos:"DF",club:"Colorado Springs"},
+ {n:"Martin Experience",pos:"DF",club:"Nancy"},
+ {n:"Keeto Thermoncy",pos:"DF",club:"Young Boys II"},
+ {n:"Jeanricner Bellegarde",pos:"MF",club:"Wolves",xi:true},
+ {n:"Danley Jean-Jacques",pos:"MF",club:"Philadelphia Union",xi:true},
+ {n:"Leverton Pierre",pos:"MF",club:"Vizela"},
+ {n:"Carl-Fred Sainthe",pos:"MF",club:"El Paso Locomotive"},
+ {n:"Woodensky Pierre",pos:"MF",club:"Violette AC"},
+ {n:"Dominique Simon",pos:"MF",club:"Tatran Prešov"},
+ {n:"Wilson Isidor",pos:"FW",club:"Sunderland",xi:true},
+ {n:"Frantzdy Pierrot",pos:"FW",club:"Çaykur Rizespor",xi:true},
+ {n:"Duckens Nazon",pos:"FW",club:"Esteghlal"},
+ {n:"Derrick Etienne",pos:"FW",club:"Toronto FC",xi:true},
+ {n:"Ruben Providence",pos:"FW",club:"Almere City"},
+ {n:"Josué Casimir",pos:"FW",club:"Auxerre"},
+ {n:"Louicius Deedson",pos:"FW",club:"FC Dallas"},
+ {n:"Yassin Fortune",pos:"FW",club:"Grenoble"},
+ {n:"Christopher Attys",pos:"MF",club:"Trento"}
+]};
+NEW["SCO"]={formation:"3-4-2-1",players:[
+ {n:"Angus Gunn",pos:"GK",club:"Nottingham Forest",xi:true},
+ {n:"Craig Gordon",pos:"GK",club:"Hearts"},
+ {n:"Cieran Slicker",pos:"GK",club:"Ipswich Town"},
+ {n:"Andy Robertson",pos:"DF",club:"Liverpool",xi:true},
+ {n:"Kieran Tierney",pos:"DF",club:"Celtic",xi:true},
+ {n:"Jack Hendry",pos:"DF",club:"Al-Ettifaq",xi:true},
+ {n:"Grant Hanley",pos:"DF",club:"Hibernian"},
+ {n:"Aaron Hickey",pos:"DF",club:"Brentford",xi:true},
+ {n:"Dom Hyam",pos:"DF",club:"Wrexham"},
+ {n:"Scott McKenna",pos:"DF",club:"Dinamo Zagreb",xi:true},
+ {n:"Nathan Patterson",pos:"DF",club:"Everton"},
+ {n:"Anthony Ralston",pos:"DF",club:"Celtic"},
+ {n:"John Souttar",pos:"DF",club:"Rangers"},
+ {n:"Scott McTominay",pos:"MF",club:"Napoli",xi:true},
+ {n:"John McGinn",pos:"MF",club:"Aston Villa",xi:true},
+ {n:"Kenny McLean",pos:"MF",club:"Norwich City",xi:true},
+ {n:"Ryan Christie",pos:"MF",club:"Bournemouth",xi:true},
+ {n:"Lewis Ferguson",pos:"MF",club:"Bologna"},
+ {n:"Ben Gannon-Doak",pos:"MF",club:"Bournemouth",xi:true},
+ {n:"Tyler Fletcher",pos:"MF",club:"Manchester United"},
+ {n:"Findlay Curtis",pos:"MF",club:"Kilmarnock"},
+ {n:"Che Adams",pos:"FW",club:"Torino",xi:true},
+ {n:"Lawrence Shankland",pos:"FW",club:"Hearts"},
+ {n:"Ross Stewart",pos:"FW",club:"Southampton"},
+ {n:"George Hirst",pos:"FW",club:"Ipswich Town"},
+ {n:"Lyndon Dykes",pos:"FW",club:"Birmingham City"}
+]};
+
+NEW["PAR"]={formation:"4-4-2",players:[
+ {n:"Gatito Fernández",pos:"GK",club:"Cerro Porteño",xi:true},
+ {n:"Orlando Gill",pos:"GK",club:"San Lorenzo"},
+ {n:"Gastón Olveira",pos:"GK",club:"Olimpia"},
+ {n:"Gustavo Gómez",pos:"DF",club:"Palmeiras",xi:true},
+ {n:"Omar Alderete",pos:"DF",club:"Sunderland",xi:true},
+ {n:"Juan Cáceres",pos:"DF",club:"Dynamo Moscow",xi:true},
+ {n:"Júnior Alonso",pos:"DF",club:"Atlético Mineiro",xi:true},
+ {n:"Fabián Balbuena",pos:"DF",club:"Grêmio"},
+ {n:"Gustavo Velázquez",pos:"DF",club:"Cerro Porteño"},
+ {n:"José Canale",pos:"DF",club:"Lanús"},
+ {n:"Alexandro Maidana",pos:"DF",club:"Talleres"},
+ {n:"Andrés Cubas",pos:"MF",club:"Vancouver Whitecaps",xi:true},
+ {n:"Damián Bobadilla",pos:"MF",club:"São Paulo",xi:true},
+ {n:"Diego Gómez",pos:"MF",club:"Brighton",xi:true},
+ {n:"Miguel Almirón",pos:"MF",club:"Atlanta United",xi:true},
+ {n:"Ramón Sosa",pos:"MF",club:"Palmeiras"},
+ {n:"Matías Galarza",pos:"MF",club:"Atlanta United"},
+ {n:"Kaku",pos:"MF",club:"Al-Ain"},
+ {n:"Braian Ojeda",pos:"MF",club:"Orlando City"},
+ {n:"Maurício",pos:"MF",club:"Palmeiras"},
+ {n:"Gustavo Caballero",pos:"MF",club:"Portsmouth"},
+ {n:"Julio Enciso",pos:"FW",club:"Strasbourg",xi:true},
+ {n:"Antonio Sanabria",pos:"FW",club:"Cremonese",xi:true},
+ {n:"Álex Arce",pos:"FW",club:"Independiente Rivadavia"},
+ {n:"Gabriel Ávalos",pos:"FW",club:"Independiente"},
+ {n:"Isidro Pitta",pos:"FW",club:"RB Bragantino"}
+]};
+NEW["AUS"]={formation:"4-2-3-1",players:[
+ {n:"Mathew Ryan",pos:"GK",club:"Levante",xi:true},
+ {n:"Paul Izzo",pos:"GK",club:"Randers"},
+ {n:"Patrick Beach",pos:"GK",club:"Melbourne City"},
+ {n:"Alessandro Circati",pos:"DF",club:"Parma",xi:true},
+ {n:"Harry Souttar",pos:"DF",club:"Leicester City",xi:true},
+ {n:"Jordan Bos",pos:"DF",club:"Feyenoord",xi:true},
+ {n:"Aziz Behich",pos:"DF",club:"Melbourne City",xi:true},
+ {n:"Cameron Burgess",pos:"DF",club:"Swansea City"},
+ {n:"Milos Degenek",pos:"DF",club:"APOEL"},
+ {n:"Jason Geria",pos:"DF",club:"Albirex Niigata"},
+ {n:"Lucas Herrington",pos:"DF",club:"Colorado Rapids"},
+ {n:"Kai Trewin",pos:"DF",club:"New York City FC"},
+ {n:"Jackson Irvine",pos:"MF",club:"St. Pauli",xi:true},
+ {n:"Aiden O'Neill",pos:"MF",club:"New York City FC",xi:true},
+ {n:"Connor Metcalfe",pos:"MF",club:"St. Pauli",xi:true},
+ {n:"Cameron Devlin",pos:"MF",club:"Hearts"},
+ {n:"Ajdin Hrustic",pos:"MF",club:"Heracles Almelo"},
+ {n:"Paul Okon-Engstler",pos:"MF",club:"Sydney FC"},
+ {n:"Jacob Italiano",pos:"MF",club:"Grazer AK"},
+ {n:"Nestory Irankunda",pos:"FW",club:"Watford",xi:true},
+ {n:"Mathew Leckie",pos:"FW",club:"Melbourne City",xi:true},
+ {n:"Mohamed Toure",pos:"FW",club:"Norwich City",xi:true},
+ {n:"Awer Mabil",pos:"FW",club:"Castellón"},
+ {n:"Nishan Velupillay",pos:"FW",club:"Melbourne Victory"},
+ {n:"Cristian Volpato",pos:"FW",club:"Sassuolo"},
+ {n:"Tete Yengi",pos:"FW",club:"Machida Zelvia"}
+]};
+NEW["TUR"]={formation:"4-2-3-1",players:[
+ {n:"Ugurcan Cakir",pos:"GK",club:"Galatasaray",xi:true},
+ {n:"Altay Bayindir",pos:"GK",club:"Manchester United"},
+ {n:"Mert Gunok",pos:"GK",club:"Fenerbahçe"},
+ {n:"Merih Demiral",pos:"DF",club:"Al-Ahli",xi:true},
+ {n:"Abdulkerim Bardakci",pos:"DF",club:"Galatasaray",xi:true},
+ {n:"Ferdi Kadioglu",pos:"DF",club:"Brighton",xi:true},
+ {n:"Zeki Celik",pos:"DF",club:"Roma",xi:true},
+ {n:"Caglar Soyuncu",pos:"DF",club:"Fenerbahçe"},
+ {n:"Mert Muldur",pos:"DF",club:"Fenerbahçe"},
+ {n:"Ozan Kabak",pos:"DF",club:"Hoffenheim"},
+ {n:"Samet Akaydin",pos:"DF",club:"Rizespor"},
+ {n:"Eren Elmali",pos:"DF",club:"Galatasaray"},
+ {n:"Hakan Calhanoglu",pos:"MF",club:"Inter Milan",xi:true},
+ {n:"Ismail Yuksek",pos:"MF",club:"Fenerbahçe",xi:true},
+ {n:"Kaan Ayhan",pos:"MF",club:"Galatasaray"},
+ {n:"Orkun Kokcu",pos:"MF",club:"Beşiktaş"},
+ {n:"Salih Ozcan",pos:"MF",club:"Borussia Dortmund"},
+ {n:"Arda Guler",pos:"FW",club:"Real Madrid",xi:true},
+ {n:"Kenan Yildiz",pos:"FW",club:"Juventus",xi:true},
+ {n:"Kerem Akturkoglu",pos:"FW",club:"Fenerbahçe",xi:true},
+ {n:"Baris Alper Yilmaz",pos:"FW",club:"Galatasaray",xi:true},
+ {n:"Yunus Akgun",pos:"FW",club:"Galatasaray"},
+ {n:"Can Uzun",pos:"FW",club:"Eintracht Frankfurt"},
+ {n:"Deniz Gul",pos:"FW",club:"Porto"},
+ {n:"Irfan Can Kahveci",pos:"FW",club:"Kasimpasa"},
+ {n:"Oguz Aydin",pos:"FW",club:"Fenerbahçe"}
+]};
+
+NEW["GER"]={formation:"4-2-3-1",players:[
+ {n:"Manuel Neuer",pos:"GK",club:"Bayern Munich",xi:true},
+ {n:"Marc-André ter Stegen",pos:"GK",club:"Barcelona"},
+ {n:"Oliver Baumann",pos:"GK",club:"Hoffenheim"},
+ {n:"Joshua Kimmich",pos:"DF",club:"Bayern Munich",xi:true},
+ {n:"Antonio Rüdiger",pos:"DF",club:"Real Madrid",xi:true},
+ {n:"Nico Schlotterbeck",pos:"DF",club:"Borussia Dortmund",xi:true},
+ {n:"David Raum",pos:"DF",club:"RB Leipzig",xi:true},
+ {n:"Jonathan Tah",pos:"DF",club:"Bayern Munich"},
+ {n:"Waldemar Anton",pos:"DF",club:"Borussia Dortmund"},
+ {n:"Malick Thiaw",pos:"DF",club:"Newcastle"},
+ {n:"Nathaniel Brown",pos:"DF",club:"Eintracht Frankfurt"},
+ {n:"Jamal Musiala",pos:"MF",club:"Bayern Munich",xi:true},
+ {n:"Florian Wirtz",pos:"MF",club:"Liverpool",xi:true},
+ {n:"Leon Goretzka",pos:"MF",club:"Bayern Munich",xi:true},
+ {n:"Aleksandar Pavlovic",pos:"MF",club:"Bayern Munich"},
+ {n:"Angelo Stiller",pos:"MF",club:"Stuttgart"},
+ {n:"Pascal Gross",pos:"MF",club:"Brighton"},
+ {n:"Felix Nmecha",pos:"MF",club:"Borussia Dortmund"},
+ {n:"Nadiem Amiri",pos:"MF",club:"Mainz"},
+ {n:"Jamie Leweling",pos:"MF",club:"Stuttgart"},
+ {n:"Assan Ouédraogo",pos:"MF",club:"RB Leipzig"},
+ {n:"Kai Havertz",pos:"FW",club:"Arsenal",xi:true},
+ {n:"Leroy Sané",pos:"FW",club:"Galatasaray",xi:true},
+ {n:"Nick Woltemade",pos:"FW",club:"Newcastle"},
+ {n:"Deniz Undav",pos:"FW",club:"Stuttgart"},
+ {n:"Maximilian Beier",pos:"FW",club:"Borussia Dortmund"}
+]};
+NEW["CUW"]={formation:"4-3-3",players:[
+ {n:"Eloy Room",pos:"GK",club:"Miami FC",xi:true},
+ {n:"Tyrick Bodak",pos:"GK",club:"Telstar"},
+ {n:"Trevor Doornbusch",pos:"GK",club:"VVV-Venlo"},
+ {n:"Sherel Floranus",pos:"DF",club:"PEC Zwolle",xi:true},
+ {n:"Roshon van Eijma",pos:"DF",club:"RKC Waalwijk",xi:true},
+ {n:"Riechedly Bazoer",pos:"DF",club:"Konyaspor",xi:true},
+ {n:"Shurandy Sambo",pos:"DF",club:"Sparta Rotterdam",xi:true},
+ {n:"Joshua Brenet",pos:"DF",club:"Kayserispor"},
+ {n:"Deveron Fonville",pos:"DF",club:"NEC Nijmegen"},
+ {n:"Jurien Gaari",pos:"DF",club:"Abha"},
+ {n:"Armando Obispo",pos:"DF",club:"PSV Eindhoven"},
+ {n:"Juninho Bacuna",pos:"MF",club:"Volendam",xi:true},
+ {n:"Leandro Bacuna",pos:"MF",club:"Iğdır",xi:true},
+ {n:"Livano Comenencia",pos:"MF",club:"Zürich",xi:true},
+ {n:"Kevin Felida",pos:"MF",club:"Den Bosch"},
+ {n:"Ar'jany Martha",pos:"MF",club:"Rotherham United"},
+ {n:"Tyrese Noslin",pos:"MF",club:"Telstar"},
+ {n:"Godfried Roemeratoe",pos:"MF",club:"RKC Waalwijk"},
+ {n:"Tahith Chong",pos:"FW",club:"Sheffield United",xi:true},
+ {n:"Jürgen Locadia",pos:"FW",club:"Miami FC",xi:true},
+ {n:"Jearl Margaritha",pos:"FW",club:"Beveren",xi:true},
+ {n:"Jeremy Antonisse",pos:"FW",club:"Kifisia"},
+ {n:"Kenji Gorré",pos:"FW",club:"Maccabi Haifa"},
+ {n:"Sontje Hansen",pos:"FW",club:"Middlesbrough"},
+ {n:"Gervane Kastaneer",pos:"FW",club:"Terengganu"},
+ {n:"Brandley Kuwas",pos:"FW",club:"Volendam"}
+]};
+NEW["CIV"]={formation:"4-3-3",players:[
+ {n:"Yahia Fofana",pos:"GK",club:"Angers",xi:true},
+ {n:"Badra Ali Sangaré",pos:"GK",club:"ASEC Mimosas"},
+ {n:"Mohamed Koné",pos:"GK",club:"Stade Tunisien"},
+ {n:"Odilon Kossounou",pos:"DF",club:"Atalanta",xi:true},
+ {n:"Evan Ndicka",pos:"DF",club:"Roma",xi:true},
+ {n:"Ousmane Diomandé",pos:"DF",club:"Sporting CP",xi:true},
+ {n:"Ghislain Konan",pos:"DF",club:"Al-Riyadh",xi:true},
+ {n:"Wilfried Singo",pos:"DF",club:"Monaco"},
+ {n:"Guéla Doué",pos:"DF",club:"Strasbourg"},
+ {n:"Emmanuel Agbadou",pos:"DF",club:"Wolves"},
+ {n:"Christopher Opéri",pos:"DF",club:"Başakşehir"},
+ {n:"Franck Kessié",pos:"MF",club:"Al-Ahli",xi:true},
+ {n:"Ibrahim Sangaré",pos:"MF",club:"Nottingham Forest",xi:true},
+ {n:"Seko Fofana",pos:"MF",club:"Porto",xi:true},
+ {n:"Jean-Michaël Seri",pos:"MF",club:"Maribor"},
+ {n:"Christ Inao Oulaï",pos:"MF",club:"Trabzonspor"},
+ {n:"Parfait Guiagon",pos:"MF",club:"Charleroi"},
+ {n:"Amad Diallo",pos:"FW",club:"Manchester United",xi:true},
+ {n:"Yan Diomandé",pos:"FW",club:"RB Leipzig",xi:true},
+ {n:"Sébastien Haller",pos:"FW",club:"Utrecht",xi:true},
+ {n:"Nicolas Pépé",pos:"FW",club:"Villarreal"},
+ {n:"Simon Adingra",pos:"FW",club:"Monaco"},
+ {n:"Evann Guessand",pos:"FW",club:"Crystal Palace"},
+ {n:"Ange-Yoan Bonny",pos:"FW",club:"Inter Milan"},
+ {n:"Oumar Diakité",pos:"FW",club:"Cercle Brugge"},
+ {n:"Elye Wahi",pos:"FW",club:"Nice"}
+]};
+NEW["ECU"]={formation:"4-3-3",players:[
+ {n:"Hernán Galíndez",pos:"GK",club:"Huracán",xi:true},
+ {n:"Alexander Domínguez",pos:"GK",club:"LDU Quito"},
+ {n:"Gilmar Napa",pos:"GK",club:"Independiente del Valle"},
+ {n:"Piero Hincapié",pos:"DF",club:"Arsenal",xi:true},
+ {n:"Willian Pacho",pos:"DF",club:"PSG",xi:true},
+ {n:"Pervis Estupiñán",pos:"DF",club:"AC Milan",xi:true},
+ {n:"Ángelo Preciado",pos:"DF",club:"Atlético Mineiro",xi:true},
+ {n:"Joel Ordóñez",pos:"DF",club:"Club Brugge"},
+ {n:"Félix Torres",pos:"DF",club:"Internacional"},
+ {n:"Jackson Porozo",pos:"DF",club:"Tijuana"},
+ {n:"Yaimar Medina",pos:"DF",club:"Genk"},
+ {n:"Moisés Caicedo",pos:"MF",club:"Chelsea",xi:true},
+ {n:"Alan Franco",pos:"MF",club:"Atlético Mineiro",xi:true},
+ {n:"Kendry Páez",pos:"MF",club:"River Plate",xi:true},
+ {n:"Pedro Vite",pos:"MF",club:"Pumas UNAM"},
+ {n:"Jordy Alcívar",pos:"MF",club:"Independiente"},
+ {n:"Denil Castillo",pos:"MF",club:"Midtjylland"},
+ {n:"Enner Valencia",pos:"FW",club:"Pachuca",xi:true},
+ {n:"Gonzalo Plata",pos:"FW",club:"Flamengo",xi:true},
+ {n:"Kevin Rodríguez",pos:"FW",club:"Union SG",xi:true},
+ {n:"Nilson Angulo",pos:"FW",club:"Sunderland"},
+ {n:"Alan Minda",pos:"FW",club:"Atlético Mineiro"},
+ {n:"John Yeboah",pos:"FW",club:"Venezia"},
+ {n:"Anthony Valencia",pos:"FW",club:"Royal Antwerp"},
+ {n:"Jordy Caicedo",pos:"FW",club:"Huracán"},
+ {n:"Jeremy Arévalo",pos:"FW",club:"Stuttgart"}
+]};
+
+NEW["NED"]={formation:"4-3-3",players:[
+ {n:"Bart Verbruggen",pos:"GK",club:"Brighton",xi:true},
+ {n:"Nick Olij",pos:"GK",club:"Sparta Rotterdam"},
+ {n:"Mark Flekken",pos:"GK",club:"Bayer Leverkusen"},
+ {n:"Virgil van Dijk",pos:"DF",club:"Liverpool",xi:true},
+ {n:"Micky van de Ven",pos:"DF",club:"Tottenham",xi:true},
+ {n:"Denzel Dumfries",pos:"DF",club:"Inter Milan",xi:true},
+ {n:"Nathan Aké",pos:"DF",club:"Manchester City",xi:true},
+ {n:"Jorrel Hato",pos:"DF",club:"Chelsea"},
+ {n:"Jan Paul van Hecke",pos:"DF",club:"Brighton"},
+ {n:"Lutsharel Geertruida",pos:"DF",club:"Sunderland"},
+ {n:"Frenkie de Jong",pos:"MF",club:"Barcelona",xi:true},
+ {n:"Ryan Gravenberch",pos:"MF",club:"Liverpool",xi:true},
+ {n:"Tijjani Reijnders",pos:"MF",club:"Manchester City",xi:true},
+ {n:"Teun Koopmeiners",pos:"MF",club:"Juventus"},
+ {n:"Marten de Roon",pos:"MF",club:"Atalanta"},
+ {n:"Guus Til",pos:"MF",club:"PSV Eindhoven"},
+ {n:"Quinten Timber",pos:"MF",club:"Feyenoord"},
+ {n:"Mats Wieffer",pos:"MF",club:"Brighton"},
+ {n:"Memphis Depay",pos:"FW",club:"Corinthians",xi:true},
+ {n:"Cody Gakpo",pos:"FW",club:"Liverpool",xi:true},
+ {n:"Donyell Malen",pos:"FW",club:"Roma",xi:true},
+ {n:"Justin Kluivert",pos:"FW",club:"Bournemouth"},
+ {n:"Brian Brobbey",pos:"FW",club:"Sunderland"},
+ {n:"Noa Lang",pos:"FW",club:"Galatasaray"},
+ {n:"Crysencio Summerville",pos:"FW",club:"West Ham"},
+ {n:"Wout Weghorst",pos:"FW",club:"Ajax"}
+]};
+NEW["JPN"]={formation:"4-2-3-1",players:[
+ {n:"Zion Suzuki",pos:"GK",club:"Parma",xi:true},
+ {n:"Keisuke Osako",pos:"GK",club:"Sanfrecce Hiroshima"},
+ {n:"Daiya Maekawa",pos:"GK",club:"Cerezo Osaka"},
+ {n:"Ko Itakura",pos:"DF",club:"Ajax",xi:true},
+ {n:"Hiroki Ito",pos:"DF",club:"Bayern Munich",xi:true},
+ {n:"Takehiro Tomiyasu",pos:"DF",club:"Ajax"},
+ {n:"Yukinari Sugawara",pos:"DF",club:"Southampton",xi:true},
+ {n:"Tsuyoshi Watanabe",pos:"DF",club:"Feyenoord",xi:true},
+ {n:"Ayumu Seko",pos:"DF",club:"Le Havre"},
+ {n:"Shogo Taniguchi",pos:"DF",club:"Sint-Truiden"},
+ {n:"Yuto Nagatomo",pos:"DF",club:"FC Tokyo"},
+ {n:"Junnosuke Suzuki",pos:"DF",club:"Kashiwa Reysol"},
+ {n:"Wataru Endo",pos:"MF",club:"Liverpool"},
+ {n:"Daichi Kamada",pos:"MF",club:"Crystal Palace",xi:true},
+ {n:"Ao Tanaka",pos:"MF",club:"Leeds United",xi:true},
+ {n:"Kaishu Sano",pos:"MF",club:"Mainz",xi:true},
+ {n:"Takefusa Kubo",pos:"MF",club:"Real Sociedad",xi:true},
+ {n:"Ritsu Doan",pos:"MF",club:"Eintracht Frankfurt",xi:true},
+ {n:"Junya Ito",pos:"MF",club:"Genk"},
+ {n:"Keito Nakamura",pos:"MF",club:"Reims"},
+ {n:"Yuito Suzuki",pos:"MF",club:"Brøndby"},
+ {n:"Machino Shuto",pos:"FW",club:"Borussia M'gladbach"},
+ {n:"Ayase Ueda",pos:"FW",club:"Feyenoord",xi:true},
+ {n:"Daizen Maeda",pos:"FW",club:"Celtic",xi:true},
+ {n:"Koki Ogawa",pos:"FW",club:"NEC Nijmegen"},
+ {n:"Mao Hosoya",pos:"FW",club:"Kashiwa Reysol"}
+]};
+NEW["SWE"]={formation:"4-3-3",players:[
+ {n:"Viktor Johansson",pos:"GK",club:"Stoke City",xi:true},
+ {n:"Kristoffer Nordfeldt",pos:"GK",club:"AIK"},
+ {n:"Jacob Widell Zetterström",pos:"GK",club:"Derby County"},
+ {n:"Victor Lindelöf",pos:"DF",club:"Aston Villa",xi:true},
+ {n:"Isak Hien",pos:"DF",club:"Atalanta",xi:true},
+ {n:"Gabriel Gudmundsson",pos:"DF",club:"Leeds United",xi:true},
+ {n:"Daniel Svensson",pos:"DF",club:"Borussia Dortmund",xi:true},
+ {n:"Hjalmar Ekdal",pos:"DF",club:"Burnley"},
+ {n:"Carl Starfelt",pos:"DF",club:"Celta Vigo"},
+ {n:"Gustaf Lagerbielke",pos:"DF",club:"Braga"},
+ {n:"Eric Smith",pos:"DF",club:"St. Pauli"},
+ {n:"Elliot Stroud",pos:"DF",club:"Mjällby"},
+ {n:"Lucas Bergvall",pos:"MF",club:"Tottenham",xi:true},
+ {n:"Yasin Ayari",pos:"MF",club:"Brighton",xi:true},
+ {n:"Mattias Svanberg",pos:"MF",club:"Wolfsburg",xi:true},
+ {n:"Jesper Karlström",pos:"MF",club:"Udinese"},
+ {n:"Besfort Zeneli",pos:"MF",club:"Union SG"},
+ {n:"Herman Johansson",pos:"MF",club:"FC Dallas"},
+ {n:"Alexander Isak",pos:"FW",club:"Liverpool",xi:true},
+ {n:"Viktor Gyökeres",pos:"FW",club:"Arsenal",xi:true},
+ {n:"Anthony Elanga",pos:"FW",club:"Newcastle",xi:true},
+ {n:"Benjamin Nygren",pos:"FW",club:"Celtic"},
+ {n:"Gustaf Nilsson",pos:"FW",club:"Club Brugge"},
+ {n:"Ken Sema",pos:"FW",club:"Pafos"},
+ {n:"Taha Ali",pos:"FW",club:"Malmö"},
+ {n:"Alexander Bernhardsson",pos:"FW",club:"Holstein Kiel"}
+]};
+NEW["TUN"]={formation:"4-3-3",players:[
+ {n:"Aymen Dahmen",pos:"GK",club:"CS Sfaxien",xi:true},
+ {n:"Sabri Ben Hessen",pos:"GK",club:"Étoile du Sahel"},
+ {n:"Mouhib Chamakh",pos:"GK",club:"Club Africain"},
+ {n:"Montassar Talbi",pos:"DF",club:"Lorient",xi:true},
+ {n:"Dylan Bronn",pos:"DF",club:"Servette",xi:true},
+ {n:"Ali Abdi",pos:"DF",club:"Nice",xi:true},
+ {n:"Yan Valery",pos:"DF",club:"Young Boys",xi:true},
+ {n:"Mohamed Amine Ben Hamida",pos:"DF",club:"Espérance"},
+ {n:"Moutaz Neffati",pos:"DF",club:"IFK Norrköping"},
+ {n:"Omar Rekik",pos:"DF",club:"Maribor"},
+ {n:"Adem Arous",pos:"DF",club:"Kasımpaşa"},
+ {n:"Raed Chikhaoui",pos:"DF",club:"US Monastir"},
+ {n:"Ellyes Skhiri",pos:"MF",club:"Eintracht Frankfurt",xi:true},
+ {n:"Hannibal Mejbri",pos:"MF",club:"Burnley",xi:true},
+ {n:"Anis Ben Slimane",pos:"MF",club:"Norwich City",xi:true},
+ {n:"Mortadha Ben Ouanes",pos:"MF",club:"Kasımpaşa"},
+ {n:"Ismael Gharbi",pos:"MF",club:"Augsburg"},
+ {n:"Hadj Mahmoud",pos:"MF",club:"Lugano"},
+ {n:"Rani Khedira",pos:"MF",club:"Union Berlin"},
+ {n:"Elias Achouri",pos:"FW",club:"Copenhagen",xi:true},
+ {n:"Hazem Mastouri",pos:"FW",club:"Dynamo Makhachkala",xi:true},
+ {n:"Firas Chaouat",pos:"FW",club:"Club Africain"},
+ {n:"Elias Saad",pos:"FW",club:"Hannover 96"},
+ {n:"Sebastian Tounekti",pos:"FW",club:"Celtic"},
+ {n:"Khalil Ayari",pos:"FW",club:"PSG"},
+ {n:"Rayan Elloumi",pos:"FW",club:"Vancouver Whitecaps"}
+]};
+
+NEW["BEL"]={formation:"4-2-3-1",players:[
+ {n:"Thibaut Courtois",pos:"GK",club:"Real Madrid",xi:true},
+ {n:"Senne Lammens",pos:"GK",club:"Manchester United"},
+ {n:"Mike Penders",pos:"GK",club:"Strasbourg"},
+ {n:"Timothy Castagne",pos:"DF",club:"Fulham",xi:true},
+ {n:"Zeno Debast",pos:"DF",club:"Sporting CP",xi:true},
+ {n:"Koni de Winter",pos:"DF",club:"AC Milan",xi:true},
+ {n:"Maxim de Cuyper",pos:"DF",club:"Brighton",xi:true},
+ {n:"Brandon Mechele",pos:"DF",club:"Club Brugge"},
+ {n:"Thomas Meunier",pos:"DF",club:"Lille"},
+ {n:"Nathan Ngoy",pos:"DF",club:"Lille"},
+ {n:"Joaquin Seys",pos:"DF",club:"Club Brugge"},
+ {n:"Arthur Theate",pos:"DF",club:"Eintracht Frankfurt"},
+ {n:"Kevin De Bruyne",pos:"MF",club:"Napoli",xi:true},
+ {n:"Youri Tielemans",pos:"MF",club:"Aston Villa",xi:true},
+ {n:"Amadou Onana",pos:"MF",club:"Aston Villa",xi:true},
+ {n:"Nicolas Raskin",pos:"MF",club:"Rangers"},
+ {n:"Hans Vanaken",pos:"MF",club:"Club Brugge"},
+ {n:"Axel Witsel",pos:"MF",club:"Girona"},
+ {n:"Jérémy Doku",pos:"FW",club:"Manchester City",xi:true},
+ {n:"Leandro Trossard",pos:"FW",club:"Arsenal",xi:true},
+ {n:"Romelu Lukaku",pos:"FW",club:"Napoli",xi:true},
+ {n:"Charles De Ketelaere",pos:"FW",club:"Atalanta"},
+ {n:"Dodi Lukebakio",pos:"FW",club:"Benfica"},
+ {n:"Alexis Saelemaekers",pos:"FW",club:"AC Milan"},
+ {n:"Diego Moreira",pos:"FW",club:"Strasbourg"},
+ {n:"Matias Fernandez-Pardo",pos:"FW",club:"Lille"}
+]};
+NEW["EGY"]={formation:"4-2-3-1",players:[
+ {n:"Mohamed El Shenawy",pos:"GK",club:"Al Ahly",xi:true},
+ {n:"Mostafa Shobeir",pos:"GK",club:"Al Ahly"},
+ {n:"El-Mahdi Soliman",pos:"GK",club:"Ittihad Alexandria"},
+ {n:"Mohamed Abdelmonem",pos:"DF",club:"Nice",xi:true},
+ {n:"Hossam Abdelmagid",pos:"DF",club:"Al Ahly",xi:true},
+ {n:"Tarek Alaa",pos:"DF",club:"Zamalek",xi:true},
+ {n:"Mohamed Hany",pos:"DF",club:"Al Ahly",xi:true},
+ {n:"Ahmed Fatouh",pos:"DF",club:"Zamalek"},
+ {n:"Karim Hafez",pos:"DF",club:"Kayserispor"},
+ {n:"Yasser Ibrahim",pos:"DF",club:"Al Ahly"},
+ {n:"Rami Rabia",pos:"DF",club:"Al Ahly"},
+ {n:"Emam Ashour",pos:"MF",club:"Al Ahly",xi:true},
+ {n:"Hamdi Fathy",pos:"MF",club:"Al-Wakrah",xi:true},
+ {n:"Marwan Attia",pos:"MF",club:"Al Ahly"},
+ {n:"Mohanad Lasheen",pos:"MF",club:"Pyramids"},
+ {n:"Nabil Emad",pos:"MF",club:"Al Najma"},
+ {n:"Mahmoud Saber",pos:"MF",club:"ZED FC"},
+ {n:"Mostafa Ziko",pos:"MF",club:"Pyramids"},
+ {n:"Ibrahim Adel",pos:"MF",club:"Nordsjælland"},
+ {n:"Ahmed Zizo",pos:"MF",club:"Al Ahly",xi:true},
+ {n:"Mahmoud Trezeguet",pos:"FW",club:"Al Ahly",xi:true},
+ {n:"Mohamed Salah",pos:"FW",club:"Liverpool",xi:true},
+ {n:"Omar Marmoush",pos:"FW",club:"Manchester City",xi:true},
+ {n:"Hamza Abdelkarim",pos:"FW",club:"Barcelona B"},
+ {n:"Haissem Hassan",pos:"MF",club:"Real Oviedo"},
+ {n:"Aqtay Abdallah",pos:"FW",club:"Enppi"}
+]};
+NEW["IRN"]={formation:"4-2-3-1",players:[
+ {n:"Alireza Beiranvand",pos:"GK",club:"Tractor",xi:true},
+ {n:"Hossein Hosseini",pos:"GK",club:"Sepahan"},
+ {n:"Payam Niazmand",pos:"GK",club:"Persepolis"},
+ {n:"Shoja Khalilzadeh",pos:"DF",club:"Tractor",xi:true},
+ {n:"Hossein Kanaani",pos:"DF",club:"Persepolis",xi:true},
+ {n:"Saleh Hardani",pos:"DF",club:"Esteghlal",xi:true},
+ {n:"Milad Mohammadi",pos:"DF",club:"Persepolis",xi:true},
+ {n:"Ehsan Hajsafi",pos:"DF",club:"Sepahan"},
+ {n:"Ramin Rezaeian",pos:"DF",club:"Foolad"},
+ {n:"Danial Eiri",pos:"DF",club:"Malavan"},
+ {n:"Ali Nemati",pos:"DF",club:"Shams Azar"},
+ {n:"Omid Noorafkan",pos:"DF",club:"Foolad"},
+ {n:"Saeid Ezatolahi",pos:"MF",club:"Shabab Al-Ahli",xi:true},
+ {n:"Saman Ghoddos",pos:"MF",club:"Kalba",xi:true},
+ {n:"Alireza Jahanbakhsh",pos:"MF",club:"Dender",xi:true},
+ {n:"Mohammad Mohebi",pos:"MF",club:"Rostov",xi:true},
+ {n:"Mehdi Ghaedi",pos:"MF",club:"Al-Nasr"},
+ {n:"Rouzbeh Cheshmi",pos:"MF",club:"Esteghlal"},
+ {n:"Mehdi Torabi",pos:"MF",club:"Tractor"},
+ {n:"Mohammad Ghorbani",pos:"MF",club:"Al-Wahda"},
+ {n:"Amir Mohammad Razzaghinia",pos:"MF",club:"Esteghlal"},
+ {n:"Aria Yousefi",pos:"MF",club:"Sepahan"},
+ {n:"Mehdi Taremi",pos:"FW",club:"Olympiacos",xi:true},
+ {n:"Amirhossein Hosseinzadeh",pos:"FW",club:"Tractor"},
+ {n:"Ali Alipour",pos:"FW",club:"Persepolis"},
+ {n:"Dennis Dargahi",pos:"FW",club:"Standard Liège"}
+]};
+NEW["NZL"]={formation:"4-4-2",players:[
+ {n:"Max Crocombe",pos:"GK",club:"Millwall",xi:true},
+ {n:"Alex Paulsen",pos:"GK",club:"Bournemouth"},
+ {n:"Oliver Sail",pos:"GK",club:"Wellington Phoenix"},
+ {n:"Tyler Bindon",pos:"DF",club:"Nottingham Forest",xi:true},
+ {n:"Michael Boxall",pos:"DF",club:"Minnesota United",xi:true},
+ {n:"Liberato Cacace",pos:"DF",club:"Wrexham",xi:true},
+ {n:"Nando Pijnaker",pos:"DF",club:"Auckland FC",xi:true},
+ {n:"Tim Payne",pos:"DF",club:"Wellington Phoenix"},
+ {n:"Francis de Vries",pos:"DF",club:"Auckland FC"},
+ {n:"Finn Surman",pos:"DF",club:"Portland Timbers"},
+ {n:"Callan Elliot",pos:"DF",club:"Auckland FC"},
+ {n:"Tommy Smith",pos:"DF",club:"Braintree Town"},
+ {n:"Joe Bell",pos:"MF",club:"Viking",xi:true},
+ {n:"Marko Stamenić",pos:"MF",club:"Swansea City",xi:true},
+ {n:"Alex Rufer",pos:"MF",club:"Wellington Phoenix",xi:true},
+ {n:"Ryan Thomas",pos:"MF",club:"PEC Zwolle"},
+ {n:"Lachlan Bayliss",pos:"MF",club:"Newcastle Jets"},
+ {n:"Matt Garbett",pos:"MF",club:"Peterborough United"},
+ {n:"Sarpreet Singh",pos:"MF",club:"Wellington Phoenix"},
+ {n:"Chris Wood",pos:"FW",club:"Nottingham Forest",xi:true},
+ {n:"Eli Just",pos:"FW",club:"Motherwell",xi:true},
+ {n:"Ben Old",pos:"FW",club:"Saint-Étienne"},
+ {n:"Kosta Barbarouses",pos:"FW",club:"Western Sydney"},
+ {n:"Ben Waine",pos:"FW",club:"Port Vale"},
+ {n:"Callum McCowatt",pos:"FW",club:"Silkeborg"},
+ {n:"Alex Greive",pos:"FW",club:"St Mirren"}
+]};
+
+NEW["CPV"]={formation:"4-3-3",players:[
+ {n:"Vozinha",pos:"GK",club:"Chaves",xi:true},
+ {n:"Márcio Rosa",pos:"GK",club:"Anadia"},
+ {n:"CJ dos Santos",pos:"GK",club:"San Diego"},
+ {n:"Logan Costa",pos:"DF",club:"Villarreal",xi:true},
+ {n:"Roberto 'Pico' Lopes",pos:"DF",club:"Shamrock Rovers",xi:true},
+ {n:"Steven Moreira",pos:"DF",club:"Columbus Crew",xi:true},
+ {n:"Wagner Pina",pos:"DF",club:"Casa Pia",xi:true},
+ {n:"Diney Borges",pos:"DF",club:"Al Bataeh"},
+ {n:"Sidny Cabral",pos:"DF",club:"Benfica B"},
+ {n:"João Paulo Fernandes",pos:"DF",club:"Sheriff Tiraspol"},
+ {n:"Kelvin Pires",pos:"DF",club:"Tondela"},
+ {n:"Stopira",pos:"DF",club:"Boavista da Praia"},
+ {n:"Jamiro Monteiro",pos:"MF",club:"PEC Zwolle",xi:true},
+ {n:"Deroy Duarte",pos:"MF",club:"Ludogorets",xi:true},
+ {n:"Kevin Pina",pos:"MF",club:"Krasnodar",xi:true},
+ {n:"Telmo Arcanjo",pos:"MF",club:"Vitória Guimarães"},
+ {n:"Laros Duarte",pos:"MF",club:"Groningen"},
+ {n:"Yannick Semedo",pos:"MF",club:"Casa Pia"},
+ {n:"Ryan Mendes",pos:"FW",club:"Iğdır",xi:true},
+ {n:"Dailon Livramento",pos:"FW",club:"Casa Pia",xi:true},
+ {n:"Garry Rodrigues",pos:"FW",club:"Apollon Limassol",xi:true},
+ {n:"Jovane Cabral",pos:"FW",club:"Estrela Amadora"},
+ {n:"Nuno da Costa",pos:"FW",club:"Başakşehir"},
+ {n:"Gilson Benchimol",pos:"FW",club:"Akron Tolyatti"},
+ {n:"Willy Semedo",pos:"FW",club:"Omonia"},
+ {n:"Hélio Varela",pos:"FW",club:"Maccabi Tel Aviv"}
+]};
+NEW["KSA"]={formation:"4-2-3-1",players:[
+ {n:"Nawaf Al Aqidi",pos:"GK",club:"Al Nassr",xi:true},
+ {n:"Mohammed Al Owais",pos:"GK",club:"Al Hilal"},
+ {n:"Ahmed Al Kassar",pos:"GK",club:"Al Qadsiah"},
+ {n:"Saud Abdulhamid",pos:"DF",club:"Lens",xi:true},
+ {n:"Hassan Tambakti",pos:"DF",club:"Al Hilal",xi:true},
+ {n:"Abdulelah Al Amri",pos:"DF",club:"Al Nassr",xi:true},
+ {n:"Ali Lajami",pos:"DF",club:"Al Hilal",xi:true},
+ {n:"Jehad Thikri",pos:"DF",club:"Al Qadsiah"},
+ {n:"Hassan Kadesh",pos:"DF",club:"Al Ittihad"},
+ {n:"Moteb Al Harbi",pos:"DF",club:"Al Hilal"},
+ {n:"Nawaf Boushal",pos:"DF",club:"Al Nassr"},
+ {n:"Ali Majrashi",pos:"DF",club:"Al Ahli"},
+ {n:"Mohammed Abu Al Shamat",pos:"DF",club:"Al Qadsiah"},
+ {n:"Mohamed Kanno",pos:"MF",club:"Al Hilal",xi:true},
+ {n:"Nasser Al Dawsari",pos:"MF",club:"Al Hilal",xi:true},
+ {n:"Abdullah Al Khaibari",pos:"MF",club:"Al Nassr"},
+ {n:"Ziyad Al Johani",pos:"MF",club:"Al Ahli"},
+ {n:"Musab Al Juwayr",pos:"MF",club:"Al Qadsiah"},
+ {n:"Alaa Al Hajji",pos:"MF",club:"Neom"},
+ {n:"Ayman Yahya",pos:"MF",club:"Al Nassr"},
+ {n:"Salem Al Dawsari",pos:"FW",club:"Al Hilal",xi:true},
+ {n:"Khalid Al Ghannam",pos:"FW",club:"Al Ettifaq",xi:true},
+ {n:"Firas Al Buraikan",pos:"FW",club:"Al Ahli",xi:true},
+ {n:"Saleh Al Shehri",pos:"FW",club:"Al Ittihad",xi:true},
+ {n:"Abdullah Al Hamdan",pos:"FW",club:"Al Nassr"},
+ {n:"Sultan Mandash",pos:"FW",club:"Al Hilal"}
+]};
+NEW["URU"]={formation:"4-3-3",players:[
+ {n:"Sergio Rochet",pos:"GK",club:"Internacional",xi:true},
+ {n:"Fernando Muslera",pos:"GK",club:"Estudiantes"},
+ {n:"Santiago Mele",pos:"GK",club:"Monterrey"},
+ {n:"Ronald Araújo",pos:"DF",club:"Barcelona",xi:true},
+ {n:"José María Giménez",pos:"DF",club:"Atlético Madrid",xi:true},
+ {n:"Mathías Olivera",pos:"DF",club:"Napoli",xi:true},
+ {n:"Guillermo Varela",pos:"DF",club:"Flamengo",xi:true},
+ {n:"Santiago Bueno",pos:"DF",club:"Wolves"},
+ {n:"Sebastián Cáceres",pos:"DF",club:"América"},
+ {n:"Joaquín Piquerez",pos:"DF",club:"Palmeiras"},
+ {n:"Matías Viña",pos:"DF",club:"River Plate"},
+ {n:"Juan Manuel Sanabria",pos:"DF",club:"Real Salt Lake"},
+ {n:"Federico Valverde",pos:"MF",club:"Real Madrid",xi:true},
+ {n:"Rodrigo Bentancur",pos:"MF",club:"Tottenham",xi:true},
+ {n:"Manuel Ugarte",pos:"MF",club:"Manchester United",xi:true},
+ {n:"Giorgian de Arrascaeta",pos:"MF",club:"Flamengo",xi:true},
+ {n:"Nicolás de la Cruz",pos:"MF",club:"Flamengo"},
+ {n:"Emiliano Martínez",pos:"MF",club:"Palmeiras"},
+ {n:"Rodrigo Zalazar",pos:"MF",club:"Braga"},
+ {n:"Agustín Canobbio",pos:"MF",club:"Fluminense"},
+ {n:"Maximiliano Araújo",pos:"MF",club:"Sporting CP"},
+ {n:"Brian Rodríguez",pos:"MF",club:"América"},
+ {n:"Facundo Pellistri",pos:"MF",club:"Panathinaikos"},
+ {n:"Darwin Núñez",pos:"FW",club:"Al-Hilal",xi:true},
+ {n:"Rodrigo Aguirre",pos:"FW",club:"Tigres"},
+ {n:"Federico Viñas",pos:"FW",club:"Real Oviedo"}
+]};
+
+NEW["FRA"]={formation:"4-3-3",players:[
+ {n:"Mike Maignan",pos:"GK",club:"AC Milan",xi:true},
+ {n:"Brice Samba",pos:"GK",club:"Rennes"},
+ {n:"Lucas Chevalier",pos:"GK",club:"PSG"},
+ {n:"William Saliba",pos:"DF",club:"Arsenal",xi:true},
+ {n:"Dayot Upamecano",pos:"DF",club:"Bayern Munich",xi:true},
+ {n:"Théo Hernández",pos:"DF",club:"Al-Hilal",xi:true},
+ {n:"Jules Koundé",pos:"DF",club:"Barcelona",xi:true},
+ {n:"Ibrahima Konaté",pos:"DF",club:"Liverpool"},
+ {n:"Lucas Hernández",pos:"DF",club:"PSG"},
+ {n:"Malo Gusto",pos:"DF",club:"Chelsea"},
+ {n:"Lucas Digne",pos:"DF",club:"Aston Villa"},
+ {n:"Maxence Lacroix",pos:"DF",club:"Crystal Palace"},
+ {n:"Aurélien Tchouaméni",pos:"MF",club:"Real Madrid",xi:true},
+ {n:"Manu Koné",pos:"MF",club:"Roma",xi:true},
+ {n:"Adrien Rabiot",pos:"MF",club:"AC Milan",xi:true},
+ {n:"N'Golo Kanté",pos:"MF",club:"Fenerbahçe"},
+ {n:"Warren Zaïre-Emery",pos:"MF",club:"PSG"},
+ {n:"Kylian Mbappé",pos:"FW",club:"Real Madrid",xi:true},
+ {n:"Ousmane Dembélé",pos:"FW",club:"PSG",xi:true},
+ {n:"Michael Olise",pos:"FW",club:"Bayern Munich",xi:true},
+ {n:"Marcus Thuram",pos:"FW",club:"Inter Milan"},
+ {n:"Bradley Barcola",pos:"FW",club:"PSG"},
+ {n:"Désiré Doué",pos:"FW",club:"PSG"},
+ {n:"Rayan Cherki",pos:"FW",club:"Manchester City"},
+ {n:"Jean-Philippe Mateta",pos:"FW",club:"Crystal Palace"},
+ {n:"Maghnes Akliouche",pos:"FW",club:"Monaco"}
+]};
+NEW["SEN"]={formation:"4-3-3",players:[
+ {n:"Édouard Mendy",pos:"GK",club:"Al-Ahli",xi:true},
+ {n:"Mory Diaw",pos:"GK",club:"Le Havre"},
+ {n:"Yehvann Diouf",pos:"GK",club:"Nice"},
+ {n:"Kalidou Koulibaly",pos:"DF",club:"Al-Hilal",xi:true},
+ {n:"Moussa Niakhaté",pos:"DF",club:"Lyon",xi:true},
+ {n:"Krépin Diatta",pos:"DF",club:"Monaco",xi:true},
+ {n:"El Hadji Malick Diouf",pos:"DF",club:"West Ham",xi:true},
+ {n:"Antoine Mendy",pos:"DF",club:"Nice"},
+ {n:"Abdoulaye Seck",pos:"DF",club:"Maccabi Haifa"},
+ {n:"Mamadou Sarr",pos:"DF",club:"Chelsea"},
+ {n:"Ismail Jakobs",pos:"DF",club:"Galatasaray"},
+ {n:"Idrissa Gana Gueye",pos:"MF",club:"Everton",xi:true},
+ {n:"Pape Matar Sarr",pos:"MF",club:"Tottenham",xi:true},
+ {n:"Habib Diarra",pos:"MF",club:"Sunderland",xi:true},
+ {n:"Pape Gueye",pos:"MF",club:"Villarreal"},
+ {n:"Lamine Camara",pos:"MF",club:"Monaco"},
+ {n:"Pathé Ciss",pos:"MF",club:"Rayo Vallecano"},
+ {n:"Bara Ndiaye",pos:"MF",club:"Bayern Munich"},
+ {n:"Sadio Mané",pos:"FW",club:"Al-Nassr",xi:true},
+ {n:"Nicolas Jackson",pos:"FW",club:"Bayern Munich",xi:true},
+ {n:"Ismaïla Sarr",pos:"FW",club:"Crystal Palace",xi:true},
+ {n:"Iliman Ndiaye",pos:"FW",club:"Everton"},
+ {n:"Assane Diao",pos:"FW",club:"Como"},
+ {n:"Ibrahim Mbaye",pos:"FW",club:"PSG"},
+ {n:"Bamba Dieng",pos:"FW",club:"Lorient"},
+ {n:"Cherif Ndiaye",pos:"FW",club:"Samsunspor"}
+]};
+NEW["IRQ"]={formation:"4-2-3-1",players:[
+ {n:"Jalal Hassan",pos:"GK",club:"Al-Zawraa",xi:true},
+ {n:"Fahad Talib",pos:"GK",club:"Al-Talaba"},
+ {n:"Ahmed Basil",pos:"GK",club:"Al-Shorta"},
+ {n:"Merchas Doski",pos:"DF",club:"Viktoria Plzeň",xi:true},
+ {n:"Rebin Sulaka",pos:"DF",club:"Port",xi:true},
+ {n:"Zaid Tahseen",pos:"DF",club:"Pakhtakor",xi:true},
+ {n:"Hussein Ali",pos:"DF",club:"Pogoń Szczecin",xi:true},
+ {n:"Manaf Younis",pos:"DF",club:"Al-Shorta"},
+ {n:"Akam Hashem",pos:"DF",club:"Al-Zawraa"},
+ {n:"Ahmed Yahya",pos:"DF",club:"Al-Shorta"},
+ {n:"Mustafa Saadoon",pos:"DF",club:"Al-Shorta"},
+ {n:"Frans Putros",pos:"DF",club:"Persib Bandung"},
+ {n:"Zaid Ismail",pos:"DF",club:"Al-Talaba"},
+ {n:"Amir Al-Ammari",pos:"MF",club:"Cracovia",xi:true},
+ {n:"Zidane Iqbal",pos:"MF",club:"Utrecht",xi:true},
+ {n:"Aimar Sher",pos:"MF",club:"Sarpsborg"},
+ {n:"Ibrahim Bayesh",pos:"MF",club:"Al-Dhafra"},
+ {n:"Kevin Yakob",pos:"MF",club:"AGF"},
+ {n:"Ahmed Qasem",pos:"MF",club:"Nashville SC"},
+ {n:"Youssef Amyn",pos:"MF",club:"AEK Larnaca"},
+ {n:"Marko Farji",pos:"MF",club:"Venezia"},
+ {n:"Aymen Hussein",pos:"FW",club:"Al-Karma",xi:true},
+ {n:"Ali Al-Hamadi",pos:"FW",club:"Ipswich Town",xi:true},
+ {n:"Ali Jassim",pos:"FW",club:"Como"},
+ {n:"Mohanad Ali",pos:"FW",club:"Dibba",xi:true},
+ {n:"Ali Yousef",pos:"FW",club:"Apollon Limassol"}
+]};
+NEW["NOR"]={formation:"4-3-3",players:[
+ {n:"Ørjan Nyland",pos:"GK",club:"Sevilla",xi:true},
+ {n:"Egil Selvik",pos:"GK",club:"Watford"},
+ {n:"Sander Tangvik",pos:"GK",club:"Hamburger SV"},
+ {n:"Julian Ryerson",pos:"DF",club:"Borussia Dortmund",xi:true},
+ {n:"Kristoffer Ajer",pos:"DF",club:"Brentford",xi:true},
+ {n:"Torbjørn Heggem",pos:"DF",club:"Bologna",xi:true},
+ {n:"David Møller Wolfe",pos:"DF",club:"Wolves",xi:true},
+ {n:"Leo Østigård",pos:"DF",club:"Genoa"},
+ {n:"Marcus Holmgren Pedersen",pos:"DF",club:"Torino"},
+ {n:"Fredrik Bjørkan",pos:"DF",club:"Bodø/Glimt"},
+ {n:"Sondre Langås",pos:"DF",club:"Derby County"},
+ {n:"Henrik Falchener",pos:"DF",club:"Viking"},
+ {n:"Martin Ødegaard",pos:"MF",club:"Arsenal",xi:true},
+ {n:"Sander Berge",pos:"MF",club:"Fulham",xi:true},
+ {n:"Kristian Thorstvedt",pos:"MF",club:"Sassuolo",xi:true},
+ {n:"Patrick Berg",pos:"MF",club:"Bodø/Glimt"},
+ {n:"Fredrik Aursnes",pos:"MF",club:"Benfica"},
+ {n:"Morten Thorsby",pos:"MF",club:"Cremonese"},
+ {n:"Thelo Aasgaard",pos:"MF",club:"Rangers"},
+ {n:"Erling Haaland",pos:"FW",club:"Manchester City",xi:true},
+ {n:"Alexander Sørloth",pos:"FW",club:"Atlético Madrid",xi:true},
+ {n:"Antonio Nusa",pos:"FW",club:"RB Leipzig",xi:true},
+ {n:"Jørgen Strand Larsen",pos:"FW",club:"Crystal Palace"},
+ {n:"Oscar Bobb",pos:"FW",club:"Fulham"},
+ {n:"Andreas Schjelderup",pos:"FW",club:"Benfica"},
+ {n:"Jens Petter Hauge",pos:"FW",club:"Bodø/Glimt"}
+]};
+
+(function(){
+  // assign jersey numbers if absent: GK 1,12,23; field players sequential 2..; keep existing nums
+  for(const code in NEW){
+    const sq=NEW[code];
+    let n=2;
+    sq.players.forEach((p,i)=>{ if(p.num==null){ if(p.pos==='GK'){p.num=[1,12,23][i] ?? (i+1);} else {p.num=n++;} } });
+    SQUADS[code]=sq;
+  }
+  // ensure each team's XI is exactly 11: if fewer flagged, top up by position priority
+  for(const code in SQUADS){
+    const sq=SQUADS[code];
+    let xi=sq.players.filter(p=>p.xi);
+    if(xi.length<11){
+      const need=11-xi.length;
+      const rest=sq.players.filter(p=>!p.xi);
+      // prefer adding by position balance roughly
+      for(let i=0;i<need && i<rest.length;i++){rest[i].xi=true;}
+    } else if(xi.length>11){
+      // unflag extras from the end
+      let extra=xi.length-11;
+      for(let i=sq.players.length-1;i>=0 && extra>0;i--){ if(sq.players[i].xi){sq.players[i].xi=false;extra--;} }
+    }
+  }
+})();
+
+
+
+/* ================= SCORING (pool rules) =================
+   Per match, max 90: outcome (1X2) = 48, exact home goals = 15,
+   exact away goals = 15, exact goal difference = 12. Independent. */
+function scorePick(pk,res){
+  let pts=0;
+  if(outc(pk[0],pk[1])===outc(res.h,res.a))pts+=48;
+  if(pk[0]===res.h)pts+=15;
+  if(pk[1]===res.a)pts+=15;
+  if(pk[0]-pk[1]===res.h-res.a)pts+=12;
+  return pts;
+}
+
+/* ================= SAFE STORAGE (remembers ranks between visits) ================= */
+const store={
+  get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+const baselineRanks=store.get("ufa_ranks");
+
+/* ================= LIVE RESULTS =================
+   Live feed: ESPN public scoreboard (browser-friendly).
+   MANUAL_RESULTS overrides the feed: {h:"MEX",a:"RSA",hs:2,as:0,final:true} */
+const API="https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719&limit=300";
+const NAME2CODE={"mexico":"MEX","south africa":"RSA","korea":"KOR","czech":"CZE","canada":"CAN","bosnia":"BIH","united states":"USA","paraguay":"PAR","qatar":"QAT","switzerland":"SUI","brazil":"BRA","morocco":"MAR","haiti":"HAI","scotland":"SCO","australia":"AUS","rkiye":"TUR","turkey":"TUR","germany":"GER","cura":"CUW","netherlands":"NED","japan":"JPN","ivoire":"CIV","ivory":"CIV","ecuador":"ECU","spain":"ESP","cape verde":"CPV","cabo verde":"CPV","belgium":"BEL","egypt":"EGY","sweden":"SWE","tunisia":"TUN","saudi":"KSA","uruguay":"URU","iran":"IRN","new zealand":"NZL","france":"FRA","senegal":"SEN","iraq":"IRQ","norway":"NOR","argentina":"ARG","algeria":"ALG","austria":"AUT","jordan":"JOR","portugal":"POR","congo":"COD","england":"ENG","croatia":"CRO","ghana":"GHA","panama":"PAN","uzbekistan":"UZB","colombia":"COL"};
+function teamCode(t){
+  if(!t)return null;
+  const ab=(t.abbreviation||"").toUpperCase();
+  if(FLAG[ab])return ab;
+  const n=((t.displayName||t.name||"")+"").toLowerCase();
+  for(const k in NAME2CODE){if(n.includes(k))return NAME2CODE[k];}
+  return null;
+}
+const MANUAL_RESULTS=[
+  {h:"MEX",a:"RSA",hs:2,as:0,final:true,d:"2026-06-11"}, // Quiñones, Jiménez
+  {h:"KOR",a:"CZE",hs:2,as:1,final:true,d:"2026-06-11"}, // Hwang, Oh comeback
+];
+let RESULTS={}, feedStatus="loading", lastUpdated=null;
+
+const keyOf=(h,a)=>h+"|"+a;
+function applyManual(){MANUAL_RESULTS.forEach(r=>{RESULTS[keyOf(r.h,r.a)]={h:r.hs,a:r.as,final:r.final!==false,live:!!r.live,d:r.d||null};});}
+function resultFor(m){
+  const r=RESULTS[keyOf(m.h,m.a)];
+  if(r)return r;
+  const f=RESULTS[keyOf(m.a,m.h)];
+  return f?{h:f.a,a:f.h,final:f.final,live:f.live,d:f.d}:null;
+}
+async function fetchResults(){
+  try{
+    const resp=await fetch(API,{cache:"no-store"});
+    if(!resp.ok)throw new Error("http "+resp.status);
+    const data=await resp.json();
+    const events=data.events||[];
+    const next={};
+    events.forEach(ev=>{
+      const st=ev.status&&ev.status.type?ev.status.type.state:"";
+      const isFinal=st==="post", isLive=st==="in";
+      if(!isFinal&&!isLive)return;
+      const comp=(ev.competitions&&ev.competitions[0])||{};
+      const cs=comp.competitors||[];
+      const home=cs.find(c=>c.homeAway==="home"), away=cs.find(c=>c.homeAway==="away");
+      if(!home||!away)return;
+      const hc=teamCode(home.team), ac=teamCode(away.team);
+      const hs=parseInt(home.score,10), as=parseInt(away.score,10);
+      if(!hc||!ac||isNaN(hs)||isNaN(as))return;
+      const d=ev.date?new Date(ev.date).toLocaleDateString("en-CA"):null;
+      next[keyOf(hc,ac)]={h:hs,a:as,final:isFinal,live:isLive,d};
+    });
+    RESULTS=next; applyManual();
+    feedStatus="ok"; lastUpdated=new Date();
+  }catch(e){
+    RESULTS={}; applyManual();
+    feedStatus=MANUAL_RESULTS.length?"manual":"error";
+  }
+  refreshAll();
+}
+
+/* ================= ANALYSIS ================= */
+const outc = (h,a)=> h>a ? "H" : h<a ? "A" : "D";
+const oname = (m,o)=> o==="H" ? m.h : o==="A" ? m.a : "Draw";
+
+const analysis = MATCHES.map(m=>{
+  const counts={H:0,D:0,A:0}, freq={};
+  let n=0;
+  m.p.forEach(pk=>{
+    if(!pk) return;
+    n++;
+    const [h,a]=pk;
+    counts[outc(h,a)]++;
+    const k=h+"-"+a; freq[k]=(freq[k]||0)+1;
+  });
+  const max=Math.max(counts.H,counts.D,counts.A);
+  const majority=["H","D","A"].filter(o=>counts[o]===max);
+  const scores=Object.entries(freq).sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0]));
+  return {counts,majority,max,freq,scores,topScore:scores[0],n};
+});
+
+const pstats = PLAYERS.map((name,i)=>{
+  let goals=0,draws=0,lone=0,herd=0,played=0,missed=0;
+  MATCHES.forEach((m,mi)=>{
+    const pk=m.p[i];
+    if(!pk){missed++;return;}
+    played++;
+    const [h,a]=pk, A=analysis[mi];
+    goals+=h+a;
+    if(h===a)draws++;
+    if(A.freq[h+"-"+a]===1)lone++;
+    if(A.majority.includes(outc(h,a)))herd++;
+  });
+  return {name,i,goals,draws,lone,herd,played,missed,avg:goals/played,
+          herdPct:Math.round(100*herd/played)};
+});
+
+const MDS=[...new Set(MATCHES.map(m=>m.md))];
+document.getElementById("subline").textContent =
+  `World Cup 2026 · ${PLAYERS.length} players · ${MATCHES.length} matches picked · max 90 pts per match`;
+
+/* ================= HELPERS ================= */
+const flap=(h,a)=>`<span class="flap"><span class="d">${h}</span><span class="sep">–</span><span class="d">${a}</span></span>`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+/* hot & cold streaks: avg points over the last 5 matches with results */
+let STREAK={};
+function updateStreaks(counted){
+  STREAK={};
+  if(counted<3)return;
+  const resulted=MATCHES.map(m=>({m,res:resultFor(m)})).filter(x=>x.res).slice(-5);
+  PLAYERS.forEach((name,i)=>{
+    let s=0,c=0;
+    resulted.forEach(({m,res})=>{const pk=m.p[i];if(pk)s+=scorePick(pk,res);c++;});
+    if(!c)return;
+    const avg=s/c;
+    if(avg>=55)STREAK[name]="🔥";
+    else if(avg<25)STREAK[name]="🧊";
+  });
+}
+const deco=n=>esc(n)+(STREAK[n]?" "+STREAK[n]:"");
+
+/* ================= TABS ================= */
+document.querySelectorAll("nav button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll("nav button").forEach(x=>x.classList.remove("on"));
+    document.querySelectorAll(".panel").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    document.getElementById(b.dataset.tab).classList.add("on");
+  });
+});
+
+/* ================= LEADERBOARD ================= */
+function computeBoard(){
+  let counted=0, anyLive=false;
+  MATCHES.forEach(m=>{const r=resultFor(m); if(r){counted++; if(r.live)anyLive=true;}});
+  const rows=PLAYERS.map((name,i)=>{
+    let pts=0,perfect=0,livePts=0;
+    MATCHES.forEach(m=>{
+      const res=resultFor(m); if(!res)return;
+      const pk=m.p[i]; if(!pk)return;
+      const p=scorePick(pk,res);
+      pts+=p; if(p===90&&res.final)perfect++; if(res.live)livePts+=p;
+    });
+    return {name,i,pts,perfect,livePts};
+  }).sort((a,b)=>b.pts-a.pts||b.perfect-a.perfect||a.name.localeCompare(b.name));
+  return {rows,counted,anyLive};
+}
+
+function rankMap(rows){
+  const map={};let rank=0,prev=null;
+  rows.forEach((r,idx)=>{if(r.pts!==prev){rank=idx+1;prev=r.pts;}map[r.name]=rank;});
+  return map;
+}
+
+function renderLeaderboard(){
+  const {rows,counted,anyLive}=computeBoard();
+  updateStreaks(counted);
+  const ranks=rankMap(rows);
+  if(counted)store.set("ufa_ranks",ranks);
+  const sl=document.getElementById("statusline");
+  const t=lastUpdated?lastUpdated.toLocaleTimeString():"";
+  if(feedStatus==="ok"){
+    sl.innerHTML=`<span class="dot ok"></span><span>${anyLive?"LIVE — ":""}updated ${t} · auto-refreshes every 90s · ${counted}/${MATCHES.length} results</span>`;
+  }else if(feedStatus==="manual"){
+    sl.innerHTML=`<span class="dot"></span><span>live feed unreachable — showing manual results (${counted}) · retrying automatically</span>`;
+  }else if(feedStatus==="error"){
+    sl.innerHTML=`<span class="dot err"></span><span>couldn't reach the live results feed — retrying every 90s</span>`;
+  }else{
+    sl.innerHTML=`<span class="dot"></span><span>connecting to live results…</span>`;
+  }
+  const lb=document.getElementById("lbbody");
+  if(!counted){
+    lb.innerHTML=`<p style="font-size:18px;color:var(--muted);padding:10px 2px">No results yet — the table fills in automatically once the first match kicks off.</p>`;
+    return;
+  }
+  const trs=rows.map(r=>{
+    const rank=ranks[r.name];
+    let mv="";
+    if(baselineRanks&&baselineRanks[r.name]){
+      const d=baselineRanks[r.name]-rank;
+      if(d>0)mv=`<span class="mv up">▲${d}</span>`;
+      else if(d<0)mv=`<span class="mv dn">▼${-d}</span>`;
+    }
+    return `<tr class="${rank<=3?"podium":""}">
+      <td class="rank">${rank}${mv}</td>
+      <td>${deco(r.name)}<span class="real">${esc(RN(r.name))}</span>${r.perfect?`<span class="tag exact">${r.perfect}× perfect</span>`:""}</td>
+      <td class="pts${r.pts?"":" zero"}">${r.pts}${r.livePts?`<span class="lv">+${r.livePts} live</span>`:""}</td>
+    </tr>`;
+  }).join("");
+  lb.innerHTML=`<table><thead><tr><th></th><th>Player</th><th style="text-align:right">Points</th></tr></thead><tbody>${trs}</tbody></table>`;
+}
+
+/* ================= TRASH-TALK TICKER ================= */
+function buildTicker(){
+  const {rows,counted}=computeBoard();
+  const H=[];
+  const resulted=MATCHES.map(m=>({m,res:resultFor(m)})).filter(x=>x.res);
+  if(counted){
+    H.push(`👑 <b>${esc(rows[0].name)}</b> leads the pool with ${rows[0].pts} pts`);
+    const lastRes=resulted[resulted.length-1];
+    PLAYERS.forEach((n,i)=>{
+      const pk=lastRes.m.p[i]; if(!pk)return;
+      const p=scorePick(pk,lastRes.res);
+      if(p===90)H.push(`💥 <b>${esc(n)}</b> drops a PERFECT 90 on ${lastRes.m.h}–${lastRes.m.a}`);
+      else if(p===0)H.push(`🧊 <b>${esc(n)}</b> blanks on ${lastRes.m.h}–${lastRes.m.a} — pool shows no mercy`);
+    });
+    const last=rows[rows.length-1];
+    if(last.pts<rows[0].pts)H.push(`🥄 <b>${esc(last.name)}</b> holds the wooden spoon`);
+    Object.entries(STREAK).forEach(([n,s])=>{if(s==="🔥")H.push(`🔥 <b>${esc(n)}</b> is heating up`);});
+  }
+  MATCHES.forEach(m=>{const r=resultFor(m);if(r&&r.live)H.push(`🔴 LIVE NOW: ${m.h} ${r.h}–${r.a} ${m.a}`);});
+  pstats.filter(s=>s.missed).forEach(s=>H.push(`🕵️ <b>${esc(s.name)}</b> missed ${s.missed} pick${s.missed>1?"s":""} — investigation ongoing`));
+  if(!H.length)H.push(`⚽ 24 players · 72 matches picked · may the best guesser win`);
+  const text=H.join(' <span style="color:rgba(242,245,240,.4)">•••</span> ')+' <span style="color:rgba(242,245,240,.4)">•••</span> ';
+  const el=document.getElementById("ticker");
+  el.innerHTML=text+text; /* duplicated for seamless loop */
+  el.style.animationDuration=Math.max(30,H.length*9)+"s";
+}
+
+/* ================= MATCHES TAB ================= */
+const mdtabsEl=document.getElementById("mdtabs");
+const gridEl=document.getElementById("matchgrid");
+let currentMD=null;
+MDS.forEach(md=>{
+  const b=document.createElement("button");
+  b.className="mdt"; b.dataset.md=md; b.textContent="Matchday "+md;
+  b.addEventListener("click",()=>renderMD(md));
+  mdtabsEl.appendChild(b);
+});
+
+function renderMD(md,keep){
+  currentMD=md;
+  document.querySelectorAll(".mdt").forEach(b=>b.classList.toggle("on",+b.dataset.md===md));
+  gridEl.innerHTML="";
+  let first=-1;
+  MATCHES.forEach((m,i)=>{
+    if(m.md!==md)return;
+    if(first<0)first=i;
+    const A=analysis[i], n=A.n, res=resultFor(m);
+    const lead=res
+      ? `<span class="fin">${res.live?"LIVE":"FT"} ${res.h}–${res.a}</span>`
+      : (A.majority.length>1 ? "split pool" : oname(m,A.majority[0])+" "+Math.round(100*A.max/n)+"%");
+    const btn=document.createElement("button");
+    btn.className="mbtn"; btn.dataset.i=i;
+    btn.innerHTML=`<div class="teams">${FLAG[m.h]} ${m.h} – ${m.a} ${FLAG[m.a]}</div>
+      <div class="mini">
+        <i class="seg-h" style="width:${100*A.counts.H/n}%"></i>
+        <i class="seg-d" style="width:${100*A.counts.D/n}%"></i>
+        <i class="seg-a" style="width:${100*A.counts.A/n}%"></i>
+      </div>
+      <div class="lean">${lead}</div>`;
+    btn.addEventListener("click",()=>showMatch(i));
+    gridEl.appendChild(btn);
+  });
+  showMatch(keep!=null?keep:first);
+}
+
+/* rooting guide for matches that haven't been played yet */
+function rootingGuide(m){
+  const groups={H:[],D:[],A:[]};
+  PLAYERS.forEach((p,pi)=>{const pk=m.p[pi];if(!pk)return;groups[outc(pk[0],pk[1])].push(p);});
+  const block=(o,label)=>groups[o].length?`<div class="root"><div class="rh">${label} <span class="plus">+48 for ${groups[o].length}</span></div><div class="names">${groups[o].map(esc).join(", ")}</div></div>`:"";
+  return `<div class="seclabel">Rooting guide — who needs what</div>
+    <div class="rooting">
+      ${block("H","If "+FLAG[m.h]+" "+m.h+" wins")}
+      ${block("D","If it's a draw")}
+      ${block("A","If "+FLAG[m.a]+" "+m.a+" wins")}
+    </div>`;
+}
+
+/* ================= SQUADS & PITCH VIEW ================= */
+const FORMATIONS={
+  "4-3-3":[[1,"GK"],[3,"DF"],[3,"DF"],[3,"DF"],[3,"DF"],[2,"MF"],[2,"MF"],[2,"MF"],[1,"FW"],[1,"FW"],[1,"FW"]],
+};
+/* rows are defined per formation as arrays of player counts from GK up to FW */
+const FORM_ROWS={
+  "4-3-3":[1,4,3,3],
+  "4-2-3-1":[1,4,2,3,1],
+  "4-4-2":[1,4,4,2],
+  "3-5-2":[1,3,5,2],
+  "4-2-2-2":[1,4,2,2,2],
+  "5-3-2":[1,5,3,2]
+};
+function pitchHTML(code,away){
+  const sq=squadFor(code);
+  if(!sq)return "";
+  const xi=sq.players.filter(p=>p.xi);
+  const rows=FORM_ROWS[sq.formation]||FORM_ROWS["4-3-3"];
+  // assign XI to rows in order GK, DF.., MF.., FW..; fall back to position grouping
+  const byPos={GK:[],DF:[],MF:[],FW:[]};
+  xi.forEach(p=>byPos[p.pos].push(p));
+  const ordered=[...byPos.GK,...byPos.DF,...byPos.MF,...byPos.FW];
+  let idx=0, dots="";
+  rows.forEach((cnt,ri)=>{
+    const yPct=away ? (8+ (ri/(rows.length-1))*84) : (92 - (ri/(rows.length-1))*84);
+    for(let c=0;c<cnt;c++){
+      const p=ordered[idx++]; if(!p)continue;
+      const xPct=cnt===1?50:(12+ (c/(cnt-1))*76);
+      const last=p.n.split(" ").slice(-1)[0];
+      dots+=`<div class="dot-p" style="left:${xPct}%;top:${yPct}%">
+        <div class="num">${p.num||""}</div>
+        <div class="nmp">${esc(last)}</div>
+        <div class="clp">${esc(p.club)}</div></div>`;
+    }
+  });
+  return `<div><div class="pitchcap">${FLAG[code]} ${code} · ${sq.formation}</div>
+    <div class="pitch${away?" away":""}">
+      <div class="ln halfway"></div><div class="ln circle"></div>
+      <div class="ln box top"></div><div class="ln box bot"></div>
+      ${dots}
+    </div></div>`;
+}
+function squadListHTML(code){
+  const sq=squadFor(code);
+  if(!sq)return `<div class="squadteam"><div class="stitle">${FLAG[code]} ${code}</div><div class="nosquad">Squad not added yet.</div></div>`;
+  const groups=["GK","DF","MF","FW"].map(pos=>{
+    const ps=sq.players.filter(p=>p.pos===pos).sort((a,b)=>(a.num||99)-(b.num||99));
+    if(!ps.length)return "";
+    return `<div class="posgroup"><div class="pl">${POS_LABEL[pos]}</div>`+
+      ps.map(p=>`<div class="plr${p.xi?" start":""}"><span class="nm"><span class="sh">${p.num||"–"}</span>${esc(p.n)}</span><span class="cl">${esc(p.club)}</span></div>`).join("")+
+      `</div>`;
+  }).join("");
+  return `<div class="squadteam"><div class="stitle">${FLAG[code]} ${code} <span style="color:var(--live);font-size:13px">● starters</span></div>${groups}</div>`;
+}
+function squadSection(m){
+  const hasH=!!squadFor(m.h), hasA=!!squadFor(m.a);
+  if(!hasH&&!hasA)return "";
+  return `<div class="seclabel">Squads & lineups</div>
+    <div class="sqtoggle" data-mi="">
+      <button class="on" data-view="list">Squad list</button>
+      <button data-view="pitch">On the pitch</button>
+    </div>
+    <div class="sqview" id="sqview-list">
+      <div class="squadcols">${squadListHTML(m.h)}${squadListHTML(m.a)}</div>
+    </div>
+    <div class="sqview" id="sqview-pitch" style="display:none">
+      <div class="pitchwrap">${pitchHTML(m.h,false)||'<div class="nosquad">'+m.h+' lineup not added yet.</div>'}${pitchHTML(m.a,true)||'<div class="nosquad">'+m.a+' lineup not added yet.</div>'}</div>
+    </div>`;
+}
+
+function showMatch(i){
+  document.querySelectorAll(".mbtn").forEach(b=>b.classList.toggle("on",+b.dataset.i===i));
+  const m=MATCHES[i], A=analysis[i], n=A.n, res=resultFor(m);
+  const pct=o=>Math.round(100*A.counts[o]/n);
+  const seg=(o,cls,label)=>A.counts[o]?`<div class="${cls}" style="width:${100*A.counts[o]/n}%" title="${label}">${A.counts[o]>=3?label+" "+pct(o)+"%":""}</div>`:"";
+
+  const picked=[],nopick=[];
+  PLAYERS.forEach((p,pi)=>{
+    const pk=m.p[pi];
+    if(!pk){nopick.push(p);return;}
+    const [h,a]=pk, k=h+"-"+a;
+    picked.push({p,h,a,k,c:A.freq[k],isTop:k===A.topScore[0]&&A.topScore[1]>1,isLone:A.freq[k]===1,
+      pts:res?scorePick(pk,res):null});
+  });
+  picked.sort((x,y)=> res ? (y.pts-x.pts||x.p.localeCompare(y.p)) : (y.c-x.c||x.k.localeCompare(y.k)||x.p.localeCompare(y.p)));
+  const rows=picked.map(r=>`<tr><td>${deco(r.p)}${r.isTop?'<span class="tag herd">crowd pick</span>':""}${r.isLone?'<span class="tag lone">lone pick</span>':""}${r.pts===90?'<span class="tag exact">perfect</span>':""}</td>
+      <td>${flap(r.h,r.a)}</td><td style="color:var(--muted)">${oname(m,outc(r.h,r.a))}</td>${res?`<td class="pts${r.pts?"":" zero"}">${r.pts}</td>`:""}</tr>`).join("")
+    + nopick.map(p=>`<tr><td>${deco(p)}<span class="tag miss">no pick</span></td><td class="nopick">—</td><td></td>${res?'<td class="pts zero">0</td>':""}</tr>`).join("");
+
+  document.getElementById("matchdetail").innerHTML=`
+    <div class="mhead"><span class="big">${FLAG[m.h]} ${m.h} <span style="color:var(--muted)">vs</span> ${m.a} ${FLAG[m.a]}</span>
+      <span class="mdtag">MD${m.md}</span>
+      ${res?(res.live?`<span class="livepill">LIVE ${res.h}–${res.a}</span>`:`<span class="ftpill">FT ${res.h}–${res.a}</span>`):""}
+    </div>
+    <div class="splitbar">${seg("H","seg-h",m.h)}${seg("D","seg-d","Draw")}${seg("A","seg-a",m.a)}</div>
+    <div class="legend">
+      <span><b>${A.counts.H}</b> picked ${m.h}</span>
+      <span><b>${A.counts.D}</b> picked a draw</span>
+      <span><b>${A.counts.A}</b> picked ${m.a}</span>
+      ${nopick.length?`<span><b>${nopick.length}</b> no pick</span>`:""}
+    </div>
+    ${res?"":rootingGuide(m)}
+    <div class="seclabel">${res?"Points this match":"Everyone's pick"}</div>
+    <table><thead><tr><th>Player</th><th>Pick</th><th>Backing</th>${res?'<th style="text-align:right">Pts</th>':""}</tr></thead><tbody>${rows}</tbody></table>
+    ${squadSection(m)}`;
+  const tg=document.querySelector("#matchdetail .sqtoggle");
+  if(tg){tg.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
+    tg.querySelectorAll("button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    document.getElementById("sqview-list").style.display=b.dataset.view==="list"?"":"none";
+    document.getElementById("sqview-pitch").style.display=b.dataset.view==="pitch"?"":"none";
+  }));}
+}
+
+/* ================= PLAYERS TAB ================= */
+function buildPGrid(){
+  const pg=document.getElementById("pgrid");
+  const on=document.querySelector(".pbtn.on");
+  const keep=on?+on.dataset.i:null;
+  pg.innerHTML="";
+  PLAYERS.forEach((p,i)=>{
+    const b=document.createElement("button");
+    b.className="pbtn"+(i===keep?" on":""); b.dataset.i=i;
+    b.innerHTML=`<span>${deco(p)}</span><small>${esc(RN(p))} · ${pstats[i].herdPct}% herd</small>`;
+    b.addEventListener("click",()=>showPlayer(i));
+    pg.appendChild(b);
+  });
+}
+
+function showPlayer(i){
+  document.querySelectorAll(".pbtn").forEach(b=>b.classList.toggle("on",+b.dataset.i===i));
+  const s=pstats[i];
+  const {rows:board}=computeBoard();
+  const mine=board.find(r=>r.i===i);
+  const rank=board.findIndex(r=>r.pts===mine.pts)+1;
+  const hasAnyResult=MATCHES.some(m=>resultFor(m));
+  const rows=MATCHES.map((m,mi)=>{
+    const pk=m.p[i], A=analysis[mi], res=resultFor(m);
+    const [tk,tc]=A.topScore, [th,ta]=tk.split("-");
+    const resCell=res?` <span style="color:var(--live);font-size:14px">${res.live?"LIVE":"FT"} ${res.h}–${res.a}</span>`:"";
+    if(!pk)return `<tr><td>${FLAG[m.h]} ${m.h}–${m.a} ${FLAG[m.a]}${resCell}</td>
+      <td class="nopick">no pick<span class="tag miss">missed</span></td>
+      <td>${flap(th,ta)} <span style="color:var(--muted);font-size:14px">×${tc}</span></td><td></td>${hasAnyResult?(res?'<td class="pts zero">0</td>':"<td></td>"):""}</tr>`;
+    const [h,a]=pk, my=outc(h,a), agrees=A.majority.includes(my);
+    const p=res?scorePick(pk,res):null;
+    return `<tr>
+      <td>${FLAG[m.h]} ${m.h}–${m.a} ${FLAG[m.a]}${resCell}</td>
+      <td>${flap(h,a)}${A.freq[h+"-"+a]===1?'<span class="tag lone">lone</span>':""}${p===90?'<span class="tag exact">perfect</span>':""}</td>
+      <td>${flap(th,ta)} <span style="color:var(--muted);font-size:14px">×${tc}</span></td>
+      <td class="${agrees?"agree":"differ"}">${agrees?"with the pool":"against · "+oname(m,my)}</td>
+      ${hasAnyResult?(res?`<td class="pts${p?"":" zero"}">${p}</td>`:"<td></td>"):""}</tr>`;
+  }).join("");
+
+  document.getElementById("pdetail").innerHTML=`
+    <div class="mhead"><span class="big">${deco(s.name)}</span><span class="real" style="font-size:17px">${esc(RN(s.name))}</span></div>
+    <div class="statrow">
+      ${hasAnyResult?`<div class="stat"><div class="v">#${rank}</div><div class="k">pool rank</div></div>
+      <div class="stat"><div class="v">${mine.pts}</div><div class="k">points</div></div>`:""}
+      <div class="stat"><div class="v">${s.herdPct}%</div><div class="k">herd index</div></div>
+      <div class="stat"><div class="v">${s.avg.toFixed(1)}</div><div class="k">goals / match</div></div>
+      <div class="stat"><div class="v">${s.draws}</div><div class="k">draws picked</div></div>
+      <div class="stat"><div class="v">${s.lone}</div><div class="k">lone-wolf picks</div></div>
+      ${s.missed?`<div class="stat"><div class="v">${s.missed}</div><div class="k">missed picks</div></div>`:""}
+    </div>
+    <div class="seclabel">Pick by pick</div>
+    <table><thead><tr><th>Match</th><th>Their pick</th><th>Pool favorite</th><th>Outcome call</th>${hasAnyResult?'<th style="text-align:right">Pts</th>':""}</tr></thead>
+    <tbody>${rows}</tbody></table>`;
+}
+
+/* ================= SUPERLATIVES ================= */
+function topBy(fn,dir=1){return [...pstats].sort((a,b)=>dir*(fn(b)-fn(a)))[0];}
+const optimist=topBy(s=>s.avg);
+const pessimist=topBy(s=>s.avg,-1);
+const fence=topBy(s=>s.draws);
+const wolf=topBy(s=>s.lone);
+const sheep=topBy(s=>s.herdPct);
+const maverick=topBy(s=>s.herdPct,-1);
+
+const allFreq={};
+MATCHES.forEach(m=>m.p.forEach(pk=>{if(!pk)return;const k=pk[0]+"-"+pk[1];allFreq[k]=(allFreq[k]||0)+1;}));
+const [popScore,popCount]=Object.entries(allFreq).sort((a,b)=>b[1]-a[1])[0];
+
+let unanimous={c:-1}, divided={c:99};
+MATCHES.forEach((m,i)=>{
+  const c=analysis[i].topScore[1];
+  if(c>unanimous.c)unanimous={m,c,k:analysis[i].topScore[0]};
+  if(c<divided.c)divided={m,c,n:analysis[i].scores.length};
+});
+
+let blow={d:-1};
+MATCHES.forEach((m,mi)=>m.p.forEach((pk,pi)=>{
+  if(!pk)return;
+  if(pk[0]+pk[1]>blow.d){blow={d:pk[0]+pk[1],h:pk[0],a:pk[1],m,p:PLAYERS[pi]}}
+}));
+
+const cards=[
+ ["The Optimist",optimist.name,`${optimist.goals} total goals predicted (${optimist.avg.toFixed(1)} per match). Expects fireworks everywhere.`],
+ ["The 0–0 Energy Award",pessimist.name,`Only ${pessimist.avg.toFixed(1)} goals per match predicted. Defense wins championships, apparently.`],
+ ["The Fence Sitter",fence.name,`Picked ${fence.draws} draws — nobody commits less.`],
+ ["The Lone Wolf",wolf.name,`${wolf.lone} picks that literally no one else made. Bold or unhinged, time will tell.`],
+ ["Chief of the Herd",sheep.name,`Agreed with the pool's majority outcome in ${sheep.herdPct}% of matches. Zero surprises here.`],
+ ["The Maverick",maverick.name,`Lowest herd index in the pool at ${maverick.herdPct}%. Allergic to consensus.`],
+ ["Pool's Favorite Scoreline",popScore.replace("-","–"),`Picked ${popCount} times across all matches. The default answer of this pool.`],
+ ["Most Unanimous Match",`${unanimous.m.h} vs ${unanimous.m.a}`,`${unanimous.c} of ${unanimous.m.p.filter(Boolean).length} players landed on the exact same ${unanimous.k.replace("-","–")}.`],
+ ["Most Chaotic Match",`${divided.m.h} vs ${divided.m.a}`,`No scoreline got more than ${divided.c} backers — ${divided.n} different scores predicted.`],
+ ["Biggest Blowout Called",blow.p,`Went ${blow.h}–${blow.a} in ${blow.m.h} vs ${blow.m.a}. No mercy.`],
+];
+document.getElementById("supergrid").innerHTML=cards.map(([a,w,y])=>
+ `<div class="super"><div class="award">${a}</div><div class="who">${esc(w)}</div><div class="why">${y}</div></div>`).join("");
+
+/* ================= BACKGROUND FLARE ================= */
+(function(){
+  const layer=document.querySelector(".flare");
+  if(!layer)return;
+  const ITEMS=["⚽","⚽","⚽","⚽","🏆","🥅","🧤","📣","🎉","🐙","🏃‍♂️","🕺","⛹️","💃"];
+  const flags=Object.values(FLAG);
+  for(let i=0;i<18;i++){
+    const o=document.createElement("span");
+    const inner=document.createElement("i");
+    const useFlag=Math.random()<0.4;
+    const pick=useFlag?flags[Math.floor(Math.random()*flags.length)]
+                      :ITEMS[Math.floor(Math.random()*ITEMS.length)];
+    inner.textContent=pick;
+    const dur=36+Math.random()*42;
+    o.style.left=(Math.random()*96)+"%";
+    o.style.fontSize=(16+Math.random()*26)+"px";
+    o.style.opacity=(0.10+Math.random()*0.15).toFixed(2);
+    o.style.animationDuration=dur+"s";
+    o.style.animationDelay=(-Math.random()*dur)+"s";
+    if(pick==="⚽"){inner.className="spin";inner.style.animationDuration=(7+Math.random()*9)+"s";}
+    else{inner.style.animationDuration=(5+Math.random()*6)+"s";inner.style.animationDelay=(-Math.random()*6)+"s";}
+    o.appendChild(inner);
+    layer.appendChild(o);
+  }
+})();
+
+/* ================= DAILY RECAP ================= */
+function renderRecap(){
+  const el=document.getElementById("recapcard");
+  if(!el)return;
+  const finals=MATCHES.map(m=>({m,res:resultFor(m)})).filter(x=>x.res&&x.res.final);
+  if(!finals.length){el.style.display="none";return;}
+  const dated=finals.filter(x=>x.res.d);
+  const day=dated.length?dated.map(x=>x.res.d).sort().pop():null;
+  const dayGames=day?dated.filter(x=>x.res.d===day):finals;
+  const label=day?new Date(day+"T12:00:00").toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"}):"Latest results";
+  const dayPts=PLAYERS.map((name,i)=>{
+    let s=0;
+    dayGames.forEach(({m,res})=>{const pk=m.p[i];if(pk)s+=scorePick(pk,res);});
+    return {name,s};
+  });
+  const maxS=Math.max(...dayPts.map(x=>x.s)), minS=Math.min(...dayPts.map(x=>x.s));
+  const tops=dayPts.filter(x=>x.s===maxS).map(x=>x.name);
+  const flops=dayPts.filter(x=>x.s===minS).map(x=>x.name);
+  const perfects=[];
+  dayGames.forEach(({m,res})=>PLAYERS.forEach((n,i)=>{const pk=m.p[i];if(pk&&scorePick(pk,res)===90)perfects.push(n);}));
+  let moveLine="";
+  if(day){
+    const beforeGames=dated.filter(x=>x.res.d<day);
+    if(beforeGames.length){
+      const tot=set=>PLAYERS.map((name,i)=>{let s=0;set.forEach(({m,res})=>{const pk=m.p[i];if(pk)s+=scorePick(pk,res);});return{name,s};}).sort((a,b)=>b.s-a.s||a.name.localeCompare(b.name));
+      const rk=rows=>{const map={};let r=0,p=null;rows.forEach((x,idx)=>{if(x.s!==p){r=idx+1;p=x.s;}map[x.name]=r;});return map;};
+      const rb=rk(tot(beforeGames)), ra=rk(tot(dated.filter(x=>x.res.d<=day)));
+      let best=null;
+      PLAYERS.forEach(n=>{const dd=rb[n]-ra[n];if(dd>0&&(!best||dd>best.dd))best={n,dd};});
+      if(best)moveLine=`<div>📈 Biggest climber: <b>${esc(best.n)}</b> ▲${best.dd}</div>`;
+    }
+  }
+  const scores=dayGames.map(({m,res})=>`${FLAG[m.h]} ${m.h} ${res.h}–${res.a} ${m.a} ${FLAG[m.a]}`).join(" · ");
+  const {rows}=computeBoard();
+  el.style.display="";
+  el.innerHTML=`
+    <div class="seclabel" style="margin-top:0">Daily recap — ${label}</div>
+    <div class="recaplines">
+      <div>⚽ ${scores}</div>
+      <div>🏆 Player${tops.length>1?"s":""} of the day: <b>${tops.map(esc).join(", ")}</b> (+${maxS})</div>
+      ${minS<maxS?`<div>💀 Flop of the day: <b>${flops.map(esc).join(", ")}</b> (+${minS})</div>`:""}
+      ${perfects.length?`<div>💥 ${perfects.length} perfect 90${perfects.length>1?"s":""}: ${perfects.map(esc).join(", ")}</div>`:""}
+      ${moveLine}
+      <div>👑 Top of the table: <b>${esc(rows[0].name)}</b> with ${rows[0].pts} pts</div>
+    </div>`;
+}
+
+/* ================= REFRESH & BOOT ================= */
+function refreshAll(){
+  renderLeaderboard();
+  renderRecap();
+  buildTicker();
+  buildPGrid();
+  const curM=document.querySelector(".mbtn.on");
+  renderMD(currentMD,curM?+curM.dataset.i:null);
+  const curP=document.querySelector(".pbtn.on");
+  if(curP)showPlayer(+curP.dataset.i);
+}
+buildPGrid();
+renderMD(MDS[0]);
+showPlayer(0);
+renderLeaderboard();
+renderRecap();
+buildTicker();
+fetchResults();
+setInterval(fetchResults,90000);
+</script>
+</body>
+</html>
